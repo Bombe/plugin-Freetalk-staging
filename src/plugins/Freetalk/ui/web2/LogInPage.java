@@ -18,14 +18,12 @@
 package plugins.Freetalk.ui.web2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.IdentityManager;
-import plugins.Freetalk.ui.web2.page.TemplatePage;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -33,7 +31,7 @@ import freenet.l10n.BaseL10n;
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class LogInPage extends TemplatePage {
+public class LogInPage extends FreetalkTemplatePage {
 
 	/** The identity manager. */
 	private final IdentityManager identityManager;
@@ -51,14 +49,6 @@ public class LogInPage extends TemplatePage {
 	public LogInPage(Template template, BaseL10n l10n, IdentityManager identityManager) {
 		super("LogIn", template, l10n, "Page.LogIn.Title");
 		this.identityManager = identityManager;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Collection<String> getStyleSheets() {
-		return Arrays.asList("css/freetalk.css");
 	}
 
 	/**
