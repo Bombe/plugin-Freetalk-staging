@@ -11,6 +11,15 @@
 </div>
 
 <div class="infobox">
+	<div class="infobox-header"><%= Page.LogIn.Box.About.Header | l10n | html></div>
+	<div class="infobox-content">
+		<p><%= Page.LogIn.Box.About.Text1 | l10n | html></p>
+		<p><%= Page.LogIn.Box.About.Text1 | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></p>
+		<p><%= Page.LogIn.Box.About.Text1 | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></p>
+	</div>
+</div>
+
+<div class="infobox">
 	<div class="infobox-header"><%= Page.LogIn.Box.LogIn.Header | l10n | html></div>
 	<div class="infobox-content">
 		<%foreach ownIdentities ownIdentity>
