@@ -18,6 +18,7 @@
 package plugins.Freetalk.ui.web2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -49,6 +50,14 @@ public class LogInPage extends TemplatePage {
 	public LogInPage(Template template, BaseL10n l10n, IdentityManager identityManager) {
 		super("LogIn", template, l10n, "Page.LogIn.Title");
 		this.identityManager = identityManager;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected Collection<String> getStyleSheets() {
+		return Arrays.asList("css/freetalk.css");
 	}
 
 	/**
