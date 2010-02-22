@@ -78,6 +78,11 @@ public class TemplatePage implements Page {
 	 */
 	@Override
 	public Response handleRequest(Request request) {
+		String redirectTarget = getRedirectTarget(request);
+		if (redirectTarget != null) {
+			return new RedirectResponse(redirectTarget);
+		}
+
 		ToadletContext toadletContext = request.getToadletContext();
 		PageMaker pageMaker = toadletContext.getPageMaker();
 		PageNode pageNode = pageMaker.getPageNode(l10n.getString(pageTitleKey), toadletContext);
@@ -112,6 +117,16 @@ public class TemplatePage implements Page {
 	 */
 	protected void processTemplate(Template template) {
 		/* do nothing. */
+	}
+
+	/**
+	 * Can be overridden to redirect the user to a different page, in case a log
+	 * in is required, or something else is wrong.
+	 *
+	 * @return The URL to redirect to, or {@code null} to not redirect
+	 */
+	protected String getRedirectTarget(Page.Request request) {
+		return null;
 	}
 
 }
