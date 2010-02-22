@@ -1,0 +1,15 @@
+<!-- Template Start: WebOfTrustMissing.html -->
+
+<%if webOfTrustOutdated>
+	<div class="infobox infobox-error">
+		<div class="infobox-header"><%= Page.WebOfTrustMissing.Box.WebOfTrustOutdated.Header | l10n | html></div>
+		<div class="infobox-content"><%= Page.WebOfTrustMissing.Box.WebOfTrustOutdated.Text | l10n | html | replace needle='${link}' replacement='<a href="/plugins/">' | replace needle='${/link}' replacement='</a>'></div>
+	</div>
+<%else>
+	<div class="infobox infobox-error">
+		<div class="infobox-header"><%= Page.WebOfTrustMissing.Box.WebOfTrustMissing.Header | l10n | html></div>
+		<div class="infobox-content"><%= Page.WebOfTrustMissing.Box.WebOfTrustMissing.Text | l10n | html | replace needle='${link}' replacement='<a href="/plugins/">' | replace needle='${/link}' replacement='</a>'></div>
+	</div>
+<%/if>
+
+<!-- Template End: WebOfTrustMissing.html -->

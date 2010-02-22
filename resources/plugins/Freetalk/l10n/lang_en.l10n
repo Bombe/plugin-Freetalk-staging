@@ -15,4 +15,9 @@ Page.LogIn.Box.LogIn.Header=Log In
 Page.LogIn.Box.LogIn.PleaseSelect=Select the identity you want to use.
 Page.LogIn.Box.LogIn.Button.LogIn=Log in
 Page.LogIn.Box.LogIn.NoOwnIdentityDefined=You do not have any own identities. Please ${link}create a new identity${/link}.
+Page.WebOfTrustMissing.Title=Web of Trust Plugin Missing
+Page.WebOfTrustMissing.Box.WebOfTrustMissing.Header=Web of Trust Plugin Missing
+Page.WebOfTrustMissing.Box.WebOfTrustMissing.Text=Freetalk requires the “Web of Trust” plugin to be loaded in your Freenet node. Please go to your Freenet node’s ${link}plugin page${/link} and load the “Web of Trust” plugin.
+Page.WebOfTrustMissing.Box.WebOfTrustOutdated.Header=Web of Trust Plugin Outdated
+Page.WebOfTrustMissing.Box.WebOfTrustOutdated.Text=This version of the Freetalk plugin is incompatible with the version of the “Web of Trust” plugin that you have installed.  Please upgrade the “Web of Trust” plugin at your Freenet node’s ${link}plugin page${/link}.
 End

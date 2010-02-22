@@ -84,9 +84,12 @@ public class WebInterface {
 		Template welcomeTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/LogIn.html"));
 		welcomeTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
 
+		Template webOfTrustMissingTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/WebOfTrustMissing.html"));
+
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage("css/", "/plugins/Freetalk/ui/web/css/")));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, freetalkPlugin.getIdentityManager()), "LogIn"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, freetalkPlugin), "LogIn"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, freetalkPlugin)));
 
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
 		toadletContainer.getPageMaker().addNavigationCategory("/Freetalk/LogIn", "Navigation.Menu.Name", "Navigation.Menu.Tooltip", freetalkPlugin);

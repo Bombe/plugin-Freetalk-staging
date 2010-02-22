@@ -123,6 +123,8 @@ public class TemplatePage implements Page {
 	 * Can be overridden to redirect the user to a different page, in case a log
 	 * in is required, or something else is wrong.
 	 *
+	 * @param request
+	 *            The request that is processed
 	 * @return The URL to redirect to, or {@code null} to not redirect
 	 */
 	protected String getRedirectTarget(Page.Request request) {

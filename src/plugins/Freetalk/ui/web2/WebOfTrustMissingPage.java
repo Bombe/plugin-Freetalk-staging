@@ -1,5 +1,5 @@
 /*
- * Freetalk - FreetalkTemplatePage.java - Copyright © 2010 David Roden
+ * Freetalk - WebOfTrustMissingPage.java - Copyright © 2010 David Roden
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,61 +17,38 @@
 
 package plugins.Freetalk.ui.web2;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.Freetalk;
-import plugins.Freetalk.ui.web2.page.Page;
-import plugins.Freetalk.ui.web2.page.TemplatePage;
 import freenet.l10n.BaseL10n;
 
 /**
- * Base page for the Freetalk web interface.
+ * Web page that tells the user the the web of trust plugin is either missing or
+ * outdated.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class FreetalkTemplatePage extends TemplatePage {
-
-	/** The Freetalk plugin. */
-	protected Freetalk freetalkPlugin;
+public class WebOfTrustMissingPage extends FreetalkTemplatePage {
 
 	/**
-	 * Creates a new template page for Freetalk.
+	 * Creates a new “web of trust is missing” page.
 	 *
-	 * @param path
-	 *            The path of the page
 	 * @param template
 	 *            The template to render
 	 * @param l10n
 	 *            The l10n handler
-	 * @param pageTitleKey
-	 *            The l10n key of the page title
 	 * @param freetalkPlugin
 	 *            The Freetalk plugin
 	 */
-	public FreetalkTemplatePage(String path, Template template, BaseL10n l10n, String pageTitleKey, Freetalk freetalkPlugin) {
-		super(path, template, l10n, pageTitleKey);
-		this.freetalkPlugin = freetalkPlugin;
+	public WebOfTrustMissingPage(Template template, BaseL10n l10n, Freetalk freetalkPlugin) {
+		super("WebOfTrustMissing", template, l10n, "Page.WebOfTrustMissing.Title", freetalkPlugin);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected Collection<String> getStyleSheets() {
-		return Arrays.asList("css/freetalk.css");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getRedirectTarget(Page.Request request) {
-		if (!freetalkPlugin.wotConnected() && !request.getURI().getPath().endsWith("/WebOfTrustMissing")) {
-			return "WebOfTrustMissing";
-		}
-		return null;
+	protected void processTemplate(Template template) {
+		template.set("webOfTrustOutdated", freetalkPlugin.wotOutdated());
 	}
 
 }
