@@ -1,5 +1,5 @@
 /*
- * utils - TemplateFactory.java - Copyright © 2010 David Roden
+ * utils - ReplaceFilter.java - Copyright © 2010 David Roden
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,24 +17,24 @@
 
 package net.pterodactylus.util.template;
 
-import java.io.Reader;
+import java.util.Map;
 
 /**
- * Interface for factories that can create templates with pre-defined settings,
- * e.g. a template factory that creates templates with a default
- * {@link HtmlFilter} added.
+ * {@link Filter} implementation that replaces parts of a value.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public interface TemplateFactory {
+public class ReplaceFilter implements Filter {
 
 	/**
-	 * Creates a template that is read from the given source.
-	 *
-	 * @param templateSource
-	 *            The source of the template
-	 * @return A template that is created from the given source
+	 * {@inheritDoc}
 	 */
-	public Template createTemplate(Reader templateSource);
+	@Override
+	public String format(Object data, Map<String, String> parameters) {
+		String input = String.valueOf(data);
+		String needle = parameters.get("needle");
+		String replacement = parameters.get("replacement");
+		return input.replace(needle, replacement);
+	}
 
 }
