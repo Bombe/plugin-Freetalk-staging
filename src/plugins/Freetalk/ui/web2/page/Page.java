@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package plugins.Freetalk.ui.web2;
+package plugins.Freetalk.ui.web2.page;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

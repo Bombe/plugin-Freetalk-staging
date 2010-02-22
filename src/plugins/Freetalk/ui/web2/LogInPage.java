@@ -25,6 +25,7 @@ import java.util.Iterator;
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.IdentityManager;
+import plugins.Freetalk.ui.web2.page.TemplatePage;
 import freenet.l10n.BaseL10n;
 
 /**
