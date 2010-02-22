@@ -66,6 +66,7 @@ public class WebInterface {
 		welcomeTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage("css/", "/plugins/Freetalk/ui/web/css/")));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, freetalkPlugin.getIdentityManager()), "LogIn"));
 
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
