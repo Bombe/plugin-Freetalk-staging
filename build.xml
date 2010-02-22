@@ -90,7 +90,7 @@
 	</target>
 
 	<!-- ================================================== -->
-	<target name="dist" depends="clean,compile,junit"
+	<target name="dist" depends="compile"
 		description="generate the distribution" >
 		<jar jarfile="${dist}/Freetalk.jar" duplicate="fail">
 			<manifest>
