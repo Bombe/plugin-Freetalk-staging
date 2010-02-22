@@ -1,0 +1,35 @@
+<!-- Template Start: LogIn.html -->
+
+<div class="infobox">
+	<div class="infobox-header infobox-warning"><%= Page.LogIn.Box.TestingWarning.Header | l10n | html></div>
+	<div class="infobox-content"><%= Page.LogIn.Box.TestingWarning.Text | l10n | html></div>
+</div>
+
+<div class="infobox">
+	<div class="infobox-header"><%= Page.LogIn.Box.NewsReader.Header | l10n | html></div>
+	<div class="infobox-content"><%= Page.LogIn.Box.NewsReader.Text | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></div>
+</div>
+
+<div class="infobox">
+	<div class="infobox-header"><%= Page.LogIn.Box.LogIn.Header | l10n | html></div>
+	<div class="infobox-content">
+		<%foreach ownIdentities ownIdentity>
+			<%first>
+				<div><%= Page.LogIn.Box.LogIn.PleaseSelect | l10n | html></div>
+				<form id="login" action="LogIn" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="formPassword" value="<% formPassword | html>" />
+					<select name="ownIdentityId">
+			<%/first>
+						<option value="<% ownIdentity.id | html>"><% ownIdentity.name | html></option>
+			<%last>
+					</select>
+					<input type="submit" name="submit" value="<%= Page.LogIn.Box.LogIn.Button.LogIn | l10n | html>" />
+				</form>
+			<%/last>
+		<%foreachelse>
+			<div><%= Page.LogIn.Box.NoOwnIdentityDefined | l10n | html | replace needle='${link}' replacement='<a href="CreateIdentity">' | replace needle='${/link}' replacement='</a'></div>
+		<%/foreach>
+	</div>
+</div>
+
+<!-- Template End: LogIn.html -->

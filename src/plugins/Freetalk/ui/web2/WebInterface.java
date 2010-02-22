@@ -17,13 +17,19 @@
 
 package plugins.Freetalk.ui.web2;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.pterodactylus.util.template.Template;
+import net.pterodactylus.util.template.TemplateFactory;
 import plugins.Freetalk.Freetalk;
 import freenet.clients.http.LinkEnabledCallback;
 import freenet.clients.http.ToadletContainer;
 import freenet.clients.http.ToadletContext;
+import freenet.l10n.BaseL10n;
 
 /**
  * TODO
@@ -53,11 +59,17 @@ public class WebInterface {
 	//
 
 	private void registerToadlets() {
+		BaseL10n l10n = freetalkPlugin.getBaseL10n();
+		TemplateFactory templateFactory = new FreetalkTemplateFactory(l10n);
+
+		Template welcomeTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/LogIn.html"));
+		welcomeTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
+
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(), ""));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, freetalkPlugin.getIdentityManager()), "LogIn"));
 
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
-		toadletContainer.getPageMaker().addNavigationCategory("/Freetalk/", "WebInterface.DiscussionMenuName", "WebInterface.DiscussionMenuName.Tooltip", freetalkPlugin);
+		toadletContainer.getPageMaker().addNavigationCategory("/Freetalk/LogIn", "Navigation.Menu.Name", "Navigation.Menu.Tooltip", freetalkPlugin);
 		for (PageToadlet toadlet : pageToadlets) {
 			String menuName = toadlet.getMenuName();
 			if (menuName != null) {
@@ -69,10 +81,19 @@ public class WebInterface {
 	}
 
 	private void unregisterToadlets() {
+		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
 		for (PageToadlet pageToadlet : pageToadlets) {
 			toadletContainer.unregister(pageToadlet);
 		}
 		toadletContainer.getPageMaker().removeNavigationCategory("Navigation.Menu.Name");
+	}
+
+	private Reader createReader(String resourceName) {
+		try {
+			return new InputStreamReader(getClass().getResourceAsStream(resourceName), "UTF-8");
+		} catch (UnsupportedEncodingException uee1) {
+			return null;
+		}
 	}
 
 	/**

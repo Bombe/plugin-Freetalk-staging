@@ -20,9 +20,12 @@ package plugins.Freetalk.ui.web2;
 import java.io.Reader;
 import java.util.Map;
 
+import net.pterodactylus.util.template.Accessor;
+import net.pterodactylus.util.template.DefaultTemplateFactory;
 import net.pterodactylus.util.template.Filter;
 import net.pterodactylus.util.template.Template;
 import net.pterodactylus.util.template.TemplateFactory;
+import plugins.Freetalk.FTIdentity;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -31,7 +34,7 @@ import freenet.l10n.BaseL10n;
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class L10nTemplateFactory implements TemplateFactory {
+public class FreetalkTemplateFactory implements TemplateFactory {
 
 	/** The base template factory. */
 	private final TemplateFactory templateFactory;
@@ -39,13 +42,16 @@ public class L10nTemplateFactory implements TemplateFactory {
 	/** The L10n filter. */
 	private final L10nFilter l10nFilter;
 
+	/** Accessor for {@link FTIdentity identities}. */
+	private final Accessor identityAccessor;
+
 	/**
 	 * Creates a new L10n template factory.
 	 *
 	 * @param l10n
 	 *            The L10n handler
 	 */
-	public L10nTemplateFactory(BaseL10n l10n) {
+	public FreetalkTemplateFactory(BaseL10n l10n) {
 		this(DefaultTemplateFactory.getInstance(), l10n);
 	}
 
@@ -59,9 +65,10 @@ public class L10nTemplateFactory implements TemplateFactory {
 	 * @param l10n
 	 *            The L10n handler
 	 */
-	public L10nTemplateFactory(TemplateFactory templateFactory, BaseL10n l10n) {
+	public FreetalkTemplateFactory(TemplateFactory templateFactory, BaseL10n l10n) {
 		this.templateFactory = templateFactory;
 		this.l10nFilter = new L10nFilter(l10n);
+		this.identityAccessor = new IdentityAccessor();
 	}
 
 	/**
@@ -71,6 +78,7 @@ public class L10nTemplateFactory implements TemplateFactory {
 	public Template createTemplate(Reader templateSource) {
 		Template template = templateFactory.createTemplate(templateSource);
 		template.addFilter("l10n", l10nFilter);
+		template.addAccessor(FTIdentity.class, identityAccessor);
 		return template;
 	}
 
@@ -104,4 +112,32 @@ public class L10nTemplateFactory implements TemplateFactory {
 		}
 
 	}
+
+	/**
+	 * {@link Accessor} implementation that returns sensible values for the
+	 * “id”, “name”, and “request-uri” members of an {@link FTIdentity}.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class IdentityAccessor implements Accessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Object object, String member) {
+			System.out.println("requesting " + member + " of " + object);
+			FTIdentity identity = (FTIdentity) object;
+			if ("id".equals(member)) {
+				return identity.getID();
+			} else if ("name".equals(member)) {
+				return identity.getNickname();
+			} else if ("request-uri".equals(member)) {
+				return identity.getRequestURI();
+			}
+			return null;
+		}
+
+	}
+
 }

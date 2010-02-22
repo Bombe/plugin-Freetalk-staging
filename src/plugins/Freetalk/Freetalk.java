@@ -14,7 +14,7 @@ import plugins.Freetalk.WoT.WoTMessageManager;
 import plugins.Freetalk.tasks.PersistentTaskManager;
 import plugins.Freetalk.ui.FCP.FCPInterface;
 import plugins.Freetalk.ui.NNTP.FreetalkNNTPServer;
-import plugins.Freetalk.ui.web.WebInterface;
+import plugins.Freetalk.ui.web2.WebInterface;
 
 import com.db4o.Db4o;
 import com.db4o.config.Configuration;
@@ -125,13 +125,13 @@ public class Freetalk implements FredPlugin, FredPluginFCP, FredPluginL10n, Fred
 //		Logger.debug(this, "Database wiped.");
 		
 		Executor executor = mPluginRespirator.getNode().executor;
-		
-		Logger.debug(this, "Creating Web interface...");
-		mWebInterface = new WebInterface(this);
-		
+
 		Logger.debug(this, "Creating identity manager...");
 		mIdentityManager = new WoTIdentityManager(this, mPluginRespirator.getNode().executor);
-		
+
+		Logger.debug(this, "Creating Web interface...");
+		mWebInterface = new WebInterface(this);
+
 		Logger.debug(this, "Creating message manager...");
 		mMessageManager = new WoTMessageManager(db, mIdentityManager, this, mPluginRespirator);
 		

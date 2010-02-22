@@ -22,6 +22,7 @@ import java.net.URI;
 import java.util.Map.Entry;
 
 import freenet.client.HighLevelSimpleClient;
+import freenet.clients.http.LinkEnabledCallback;
 import freenet.clients.http.Toadlet;
 import freenet.clients.http.ToadletContext;
 import freenet.clients.http.ToadletContextClosedException;
@@ -36,7 +37,7 @@ import freenet.support.io.Closer;
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public class PageToadlet extends Toadlet {
+public class PageToadlet extends Toadlet implements LinkEnabledCallback {
 
 	/** The name of the menu item. */
 	private final String menuName;
@@ -164,6 +165,14 @@ public class PageToadlet extends Toadlet {
 		} finally {
 			Closer.close(data);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isEnabled(ToadletContext toadletContext) {
+		return true;
 	}
 
 }
