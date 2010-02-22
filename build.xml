@@ -44,9 +44,10 @@
 			<include name="**/*.java"/>
 		</javac>
 		<copy todir="${build}">
-			<fileset dir="src/">
+			<fileset dir="resources/">
 				<include name="**/*.l10n" />
 				<include name="plugins/Freetalk/ui/web/css/*.css" />
+				<include name="plugins/Freetalk/ui/web/html/*.html" />
 			</fileset>
 		</copy>
 	</target>
