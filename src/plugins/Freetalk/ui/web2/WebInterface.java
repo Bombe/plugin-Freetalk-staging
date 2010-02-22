@@ -17,6 +17,7 @@
 
 package plugins.Freetalk.ui.web2;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
@@ -32,15 +33,24 @@ import freenet.clients.http.ToadletContext;
 import freenet.l10n.BaseL10n;
 
 /**
- * TODO
+ * Main web interface class.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
 public class WebInterface {
 
+	/** The plugin. */
 	private final Freetalk freetalkPlugin;
+
+	/** The registered toadlets. */
 	private final List<PageToadlet> pageToadlets = new ArrayList<PageToadlet>();
 
+	/**
+	 * Creates a new web interface.
+	 *
+	 * @param freetalkPlugin
+	 *            The plugin
+	 */
 	public WebInterface(Freetalk freetalkPlugin) {
 		this.freetalkPlugin = freetalkPlugin;
 		registerToadlets();
@@ -50,6 +60,9 @@ public class WebInterface {
 	// ACTIONS
 	//
 
+	/**
+	 * Terminates the plugin.
+	 */
 	public void terminate() {
 		unregisterToadlets();
 	}
@@ -58,6 +71,9 @@ public class WebInterface {
 	// PRIVATE ACTIONS
 	//
 
+	/**
+	 * Register all toadlets.
+	 */
 	private void registerToadlets() {
 		BaseL10n l10n = freetalkPlugin.getBaseL10n();
 		TemplateFactory templateFactory = new FreetalkTemplateFactory(l10n);
@@ -81,6 +97,9 @@ public class WebInterface {
 		}
 	}
 
+	/**
+	 * Unregisters all toadlets.
+	 */
 	private void unregisterToadlets() {
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
 		for (PageToadlet pageToadlet : pageToadlets) {
@@ -89,6 +108,14 @@ public class WebInterface {
 		toadletContainer.getPageMaker().removeNavigationCategory("Navigation.Menu.Name");
 	}
 
+	/**
+	 * Creates a {@link Reader} from the {@link InputStream} for the resource
+	 * with the given name.
+	 *
+	 * @param resourceName
+	 *            The name of the resource
+	 * @return A {@link Reader} for the resource
+	 */
 	private Reader createReader(String resourceName) {
 		try {
 			return new InputStreamReader(getClass().getResourceAsStream(resourceName), "UTF-8");
