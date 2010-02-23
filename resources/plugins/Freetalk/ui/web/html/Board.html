@@ -1,7 +1,7 @@
 <!-- Template Start: Board.html -->
 
 <div class="infobox">
-	<div class="infobox-header"></div>
+	<div class="infobox-header"><%= Page.Board.Box.Board.Header | l10n | html | insert needle='${name}' key='board.name'></div>
 	<div class="infobox-content">
 		<%foreach threads thread>
 			<%first>
