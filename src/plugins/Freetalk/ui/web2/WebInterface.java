@@ -135,12 +135,15 @@ public class WebInterface {
 
 		Template indexTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Index.html"));
 
+		Template boardsTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Boards.html"));
+
 		Template webOfTrustMissingTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/WebOfTrustMissing.html"));
 		Template sessionExpiredTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/SessionExpired.html"));
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(indexTemplate, l10n, this), "Index"));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, this), "LogIn"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardsPage(boardsTemplate, l10n, this), "Boards"));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, this)));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new FreetalkTemplatePage("SessionExpired", sessionExpiredTemplate, l10n, "Page.SessionExpired.Title", this)));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage("css/", "/plugins/Freetalk/ui/web/css/")));

@@ -1,0 +1,26 @@
+<!-- Template Start: Boards.html -->
+
+<div class="infobox">
+	<div class="infobox-header"><%= Page.Boards.Box.Boards.Header | l10n | html></div>
+	<div class="infobox-content">
+		<%foreach boards board>
+			<%first>
+				<div><%= Page.Boards.Box.Boards.Text | l10n | html></div>
+				<div class="boards">
+					<div class="header">
+						<div class="name"><%= Page.Boards.Box.Boards.Table.Header.Name | l10n | html></div>
+					</div>
+			<%/first>
+				<div class="board">
+					<div class="name"><a href="Board?ID=<% board.id | html>"><% board.name | html></a></div>
+				</div>
+			<%last>
+				</div>
+			<%/last>
+		<%foreachelse>
+			<div><%= Page.Boards.Box.Boards.NoBoards | l10n | html | replace needle='${link}' replacement='<a href="Boards">' | replace needle='${/link}' replacement='</a>'></div>
+		<%/foreach>
+	</div>
+</div>
+
+<!-- Template End: Boards.html -->
