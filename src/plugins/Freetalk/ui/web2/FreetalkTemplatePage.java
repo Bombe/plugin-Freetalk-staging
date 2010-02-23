@@ -23,6 +23,7 @@ import java.util.Collection;
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.ui.web2.page.Page;
 import plugins.Freetalk.ui.web2.page.TemplatePage;
+import freenet.clients.http.SessionManager.Session;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -60,6 +61,18 @@ public class FreetalkTemplatePage extends TemplatePage {
 	@Override
 	protected Collection<String> getStyleSheets() {
 		return Arrays.asList("css/freetalk.css");
+	}
+
+	/**
+	 * Returns the current session.
+	 *
+	 * @param request
+	 *            The request to get the session for
+	 * @return The session of the request, or {@code null} if there is no
+	 *         session
+	 */
+	protected Session getSession(Page.Request request) {
+		return webInterface.getSession(request);
 	}
 
 	/**
