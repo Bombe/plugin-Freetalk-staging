@@ -1,0 +1,31 @@
+<!-- Template Start: Board.html -->
+
+<div class="infobox">
+	<div class="infobox-header"></div>
+	<div class="infobox-content">
+		<%foreach threads thread>
+			<%first>
+				<div class="threads">
+					<div class="header">
+						<div class="title"><%= Page.Board.Box.Board.Table.Header.Title | l10n | html></div>
+						<div class="author"><%= Page.Board.Box.Board.Table.Header.Author | l10n | html></div>
+						<div class="latest-message"><%= Page.Board.Box.Board.Table.Header.LatestMessage | l10n | html></div>
+						<div class="message-count"><%= Page.Board.Box.Board.Table.Header.MessageCount | l10n | html></div>
+					</div>
+			<%/first>
+					<div class="thread">
+						<div class="title"><% thread.title | html></div>
+						<div class="author"><% thread.author.unique-name | html></div>
+						<div class="latest-message"></div>
+						<div class="message-count"></div>
+					</div>
+			<%last>
+				</div>
+			<%/last>
+		<%foreachelse>
+			<div><%= Page.Board.Box.Board.NoThreads | l10n | html></div>
+		<%/foreach>
+	</div>
+</div>
+
+<!-- Template End: Board.html -->
