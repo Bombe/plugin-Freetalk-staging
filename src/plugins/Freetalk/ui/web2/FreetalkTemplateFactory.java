@@ -32,6 +32,7 @@ import plugins.Freetalk.FTIdentity;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.Message;
 import plugins.Freetalk.SubscribedBoard;
+import plugins.Freetalk.SubscribedBoard.BoardThreadLink;
 import plugins.Freetalk.SubscribedBoard.MessageReference;
 import plugins.Freetalk.exceptions.MessageNotFetchedException;
 import plugins.Freetalk.exceptions.NoSuchMessageException;
@@ -66,6 +67,9 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	/** Accessor for {@link MessageReference message references}. */
 	private final Accessor messageReferenceAccessor;
 
+	/** Accessor for {@link BoardThreadLink}.s */
+	private final Accessor boardThreadLinkAccessor;
+
 	/** Accessor for {@link Message messages}. */
 	private final Accessor messageAccessor;
 
@@ -96,6 +100,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		this.boardAccessor = new BoardAccessor();
 		this.subscribedBoardAccessor = new SubscribedBoardAccessor();
 		this.messageReferenceAccessor = new MessageReferenceAccessor();
+		this.boardThreadLinkAccessor = new BoardThreadLinkAccessor();
 		this.messageAccessor = new MessageAccessor();
 	}
 
@@ -110,6 +115,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		template.addAccessor(FTIdentity.class, identityAccessor);
 		template.addAccessor(SubscribedBoard.class, subscribedBoardAccessor);
 		template.addAccessor(Board.class, boardAccessor);
+		template.addAccessor(BoardThreadLink.class, boardThreadLinkAccessor);
 		template.addAccessor(MessageReference.class, messageReferenceAccessor);
 		template.addAccessor(Message.class, messageAccessor);
 		return template;
@@ -228,6 +234,30 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return messageReference.getMessageDate();
 			}
 			return null;
+		}
+
+	}
+
+	/**
+	 * {@link Accessor} implementation that can handle the “index”, “message”,
+	 * “read”, and “date” properties of a {@link MessageReference}.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class BoardThreadLinkAccessor extends MessageReferenceAccessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Template template, Object object, String member) {
+			BoardThreadLink boardThreadLink = (BoardThreadLink) object;
+			if ("last-reply-date".equals(member)) {
+				return boardThreadLink.getLastReplyDate();
+			} else if ("thread-id".equals(member)) {
+				return boardThreadLink.getThreadID();
+			}
+			return super.get(template, object, member);
 		}
 
 	}
