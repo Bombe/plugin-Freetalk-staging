@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ import plugins.Freetalk.ui.web2.page.CSSPage;
 import plugins.Freetalk.ui.web2.page.PageToadlet;
 import plugins.Freetalk.ui.web2.page.PageToadletFactory;
 import freenet.clients.http.LinkEnabledCallback;
+import freenet.clients.http.SessionManager;
 import freenet.clients.http.ToadletContainer;
 import freenet.clients.http.ToadletContext;
 import freenet.l10n.BaseL10n;
@@ -45,6 +48,9 @@ public class WebInterface {
 	/** The plugin. */
 	private final Freetalk freetalkPlugin;
 
+	/** The session manager. */
+	private final SessionManager sessionManager;
+
 	/** The registered toadlets. */
 	private final List<PageToadlet> pageToadlets = new ArrayList<PageToadlet>();
 
@@ -56,6 +62,11 @@ public class WebInterface {
 	 */
 	public WebInterface(Freetalk freetalkPlugin) {
 		this.freetalkPlugin = freetalkPlugin;
+		try {
+			sessionManager = new SessionManager(new URI("/Freetalk"));
+		} catch (URISyntaxException use1) {
+			throw new RuntimeException("Could not create session manager.", use1);
+		}
 		registerToadlets();
 	}
 
@@ -66,6 +77,15 @@ public class WebInterface {
 	 */
 	public Freetalk getFreetalkPlugin() {
 		return freetalkPlugin;
+	}
+
+	/**
+	 * Returns the session manager.
+	 *
+	 * @return The session manager
+	 */
+	public SessionManager getSessionManager() {
+		return sessionManager;
 	}
 
 	//
