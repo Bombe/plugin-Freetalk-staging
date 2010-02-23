@@ -19,7 +19,6 @@ package plugins.Freetalk.ui.web2;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 
 import net.pterodactylus.util.template.Template;
@@ -63,7 +62,7 @@ public class IndexPage extends FreetalkTemplatePage {
 		while (boardIterator.hasNext()) {
 			subscribedBoards.add(boardIterator.next());
 		}
-		template.set("boards", Collections.emptyList());
+		template.set("boards", subscribedBoards);
 	}
 
 	/**
