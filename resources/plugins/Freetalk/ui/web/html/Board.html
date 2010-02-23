@@ -15,8 +15,8 @@
 					</div>
 			<%/first>
 					<div class="thread <% if thread.read>read<%else>unread<%/if>">
-						<div class="title"><a href="Thread?Board=<% board.name | html>&Thread=<% thread.id | html>"><% thread.message.title | html></a></div>
-						<div class="author"><% thread.message.author.unique-name | html></div>
+						<div class="title"><a href="Thread?Board=<% board.name | html>&Thread=<% thread.id | html>"><%ifnull thread.message.title><span class="unknown"><%= Page.Board.Box.Board.Table.Header.Title.Unknown | l10n | html></span><%else><% thread.message.title | html><%/if></a></div>
+						<div class="author"><%ifnull thread.message.author><span class="unknown"><%= Page.Board.Box.Board.Table.Header.Author.Unknown | l10n | html></span><%else><% thread.message.author.unique-name | html><%/if></div>
 						<div class="latest-message"><% thread.last-reply-date | date | html></div>
 						<div class="reply-count"><% thread.reply-count | html></div>
 						<div class="unread-reply-count"><% thread.unread-reply-count | html></div>
