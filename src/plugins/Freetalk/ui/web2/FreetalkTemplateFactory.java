@@ -25,7 +25,9 @@ import net.pterodactylus.util.template.DefaultTemplateFactory;
 import net.pterodactylus.util.template.Filter;
 import net.pterodactylus.util.template.Template;
 import net.pterodactylus.util.template.TemplateFactory;
+import plugins.Freetalk.Board;
 import plugins.Freetalk.FTIdentity;
+import plugins.Freetalk.SubscribedBoard;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -79,6 +81,8 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		Template template = templateFactory.createTemplate(templateSource);
 		template.addFilter("l10n", l10nFilter);
 		template.addAccessor(FTIdentity.class, identityAccessor);
+		template.addAccessor(SubscribedBoard.class, new SubscribedBoardAccessor());
+		template.addAccessor(Board.class, new BoardAccessor());
 		return template;
 	}
 
@@ -137,6 +141,57 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return identity.getRequestURI();
 			}
 			return null;
+		}
+
+	}
+
+	/**
+	 * {@link Accessor} implementation that exposes the {@link Board#getID “id”}
+	 * , {@link Board#getName() “name”}, and {@link Board#getFirstSeenDate()
+	 * “first-seen-date”} properties of a {@link Board}.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class BoardAccessor implements Accessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Object object, String member) {
+			Board board = (Board) object;
+			if ("id".equals(member)) {
+				return board.getID();
+			} else if ("name".equals(member)) {
+				return board.getName();
+			} else if ("first-seen-date".equals(member)) {
+				return board.getFirstSeenDate();
+			}
+			return null;
+		}
+
+	}
+
+	/**
+	 * {@link Accessor} implementation that can, in addition to
+	 * {@link BoardAccessor}, expose more properties.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class SubscribedBoardAccessor extends BoardAccessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Object object, String member) {
+			SubscribedBoard subscribedBoard = (SubscribedBoard) object;
+			if ("message-count".equals(member)) {
+				return subscribedBoard.messageCount();
+			} else if ("unread-message-count".equals(member)) {
+				return subscribedBoard.getUnreadMessageCount();
+			}
+			return super.get(object, member);
 		}
 
 	}
