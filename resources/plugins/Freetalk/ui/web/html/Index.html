@@ -1,0 +1,17 @@
+<!-- Template Start: Index.html -->
+
+<div class="infobox">
+	<div class="infobox-header"><%= Page.Index.Box.Introduction.Header | l10n | html></div>
+	<div class="infobox-content"><%= Page.Index.Box.Introduction.Text | l10n | html | insert needle='${identity}' key='loggedInUser.unique-name'></div>
+</div>
+
+<div class="infobox">
+	<div class="infobox-header"><%= Page.Index.Box.BoardList.Header | l10n | html></div>
+	<div class="infobox-content">
+		<%foreach boards board>
+		<%foreachelse>
+		<%/foreach>
+	</div>
+</div>
+
+<!-- Template End: Index.html -->
