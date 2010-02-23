@@ -132,6 +132,8 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return identity.getID();
 			} else if ("name".equals(member)) {
 				return identity.getNickname();
+			} else if ("unique-name".equals(member)) {
+				return identity.getShortestUniqueName(100);
 			} else if ("request-uri".equals(member)) {
 				return identity.getRequestURI();
 			}
