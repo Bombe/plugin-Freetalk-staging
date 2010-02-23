@@ -17,19 +17,19 @@ form#login {
 	margin-bottom: 0;
 }
 
-.infobox-content .boards {
+.infobox-content .boards, .infobox-content .threads {
 	display: table;
 }
 
-.boards .header > div {
+.boards .header > div, .threads .header > div {
 	font-weight: bold;
 }
 
-.boards .header, .boards .board {
+.boards .header, .boards .board, .threads .header, .threads .thread {
 	display: table-row;
 }
 
-.boards .header > div, .boards .board > div {
+.boards .header > div, .boards .board > div, .threads .header > div, .threads .thread > div {
 	display: table-cell;
 	padding: 0.5ex 1ex;
 }
