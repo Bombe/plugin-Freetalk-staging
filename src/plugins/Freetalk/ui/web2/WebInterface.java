@@ -30,12 +30,15 @@ import net.pterodactylus.util.template.Template;
 import net.pterodactylus.util.template.TemplateFactory;
 import plugins.Freetalk.Freetalk;
 import plugins.Freetalk.ui.web2.page.CSSPage;
+import plugins.Freetalk.ui.web2.page.Page;
 import plugins.Freetalk.ui.web2.page.PageToadlet;
 import plugins.Freetalk.ui.web2.page.PageToadletFactory;
 import freenet.clients.http.LinkEnabledCallback;
+import freenet.clients.http.RedirectException;
 import freenet.clients.http.SessionManager;
 import freenet.clients.http.ToadletContainer;
 import freenet.clients.http.ToadletContext;
+import freenet.clients.http.SessionManager.Session;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -86,6 +89,23 @@ public class WebInterface {
 	 */
 	public SessionManager getSessionManager() {
 		return sessionManager;
+	}
+
+	/**
+	 * Returns the current session.
+	 *
+	 * @param request
+	 *            The request to get the session for
+	 * @return The session of the request, or {@code null} if there is no
+	 *         session
+	 */
+	public Session getSession(Page.Request request) {
+		try {
+			return sessionManager.useSession(request.getToadletContext());
+		} catch (RedirectException re1) {
+			/* will not throw because we did not set a redirect URI. */
+			return null;
+		}
 	}
 
 	//
