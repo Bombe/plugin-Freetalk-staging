@@ -28,7 +28,9 @@ import java.util.List;
 
 import net.pterodactylus.util.template.Template;
 import net.pterodactylus.util.template.TemplateFactory;
+import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.Freetalk;
+import plugins.Freetalk.exceptions.NoSuchIdentityException;
 import plugins.Freetalk.ui.web2.page.CSSPage;
 import plugins.Freetalk.ui.web2.page.Page;
 import plugins.Freetalk.ui.web2.page.PageToadlet;
@@ -104,6 +106,28 @@ public class WebInterface {
 			return sessionManager.useSession(request.getToadletContext());
 		} catch (RedirectException re1) {
 			/* will not throw because we did not set a redirect URI. */
+			return null;
+		}
+	}
+
+	/**
+	 * Returns the currently logged in {@link FTOwnIdentity own identity}.
+	 *
+	 * @param request
+	 *            The request to get the logged in user for
+	 * @return The logged in identity, or {@code null} if no identity is
+	 *         currently logged in
+	 */
+	public FTOwnIdentity getOwnIdentity(Page.Request request) {
+		Session session = getSession(request);
+		if (session == null) {
+			return null;
+		}
+		String userId = session.getUserID();
+		try {
+			FTOwnIdentity ownIdentity = freetalkPlugin.getIdentityManager().getOwnIdentity(userId);
+			return ownIdentity;
+		} catch (NoSuchIdentityException nsie1) {
 			return null;
 		}
 	}
