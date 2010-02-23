@@ -11,6 +11,7 @@ Page.Boards.Box.Boards.Header=All Currently Known Boards
 Page.Boards.Box.Boards.Text=This is a list of all boards that are currently known by Freetalk.
 Page.Boards.Box.Boards.NoBoards=Your Freetalk has not yet found any boards. Please wait some time and ${link}try again${/link}.
 Page.Boards.Box.Boards.Table.Header.Name=Name
+Page.Boards.Box.Boards.Table.Header.Description=Description
 Page.Boards.Box.Boards.Table.Header.FirstSeen=First Seen
 Page.Index.Title=Freetalk Home Page
 Page.Index.Box.Introduction.Header=Welcome to Freetalk
