@@ -1,0 +1,8 @@
+<!-- Template Start: SessionExpired.html -->
+
+<div class="infobox infobox-error">
+	<div class="infobox-header"><%= Page.SessionExpired.Box.SessionExpired.Header | l10n | html></div>
+	<div class="infobox-content"><%= Page.SessionExpired.Box.SessionExpired.Text | l10n | html | replace needle='${link}' replacement='<a href="LogIn">' | replace needle='${/link}' replacement='</a>'></div>
+</div>
+
+<!-- Template End: SessionExpired.html -->
