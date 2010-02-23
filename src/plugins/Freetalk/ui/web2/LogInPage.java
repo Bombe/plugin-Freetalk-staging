@@ -24,6 +24,7 @@ import java.util.Iterator;
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.IdentityManager;
+import plugins.Freetalk.exceptions.NoSuchIdentityException;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -62,6 +63,28 @@ public class LogInPage extends FreetalkTemplatePage {
 			ownIdentities.add(ownIdentity);
 		}
 		template.set("ownIdentities", ownIdentities);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getRedirectTarget(Request request) {
+		if (request.getMethod().equals("POST")) {
+			String formPassword = request.getHttpRequest().getPartAsString("formPassword", 32);
+			if (!formPassword.equals(webInterface.getFreetalkPlugin().getPluginRespirator().getToadletContainer().getFormPassword())) {
+				return "InvalidFormPassword";
+			}
+			String ownIdentityId = request.getHttpRequest().getPartAsString("ownIdentityId", 64);
+			FTOwnIdentity ownIdentity;
+			try {
+				ownIdentity = webInterface.getFreetalkPlugin().getIdentityManager().getOwnIdentity(ownIdentityId);
+			} catch (NoSuchIdentityException nsie1) {
+				return "IdentityNotFound";
+			}
+			webInterface.getSessionManager().createSession(ownIdentity.getID(), request.getToadletContext());
+		}
+		return null;
 	}
 
 }
