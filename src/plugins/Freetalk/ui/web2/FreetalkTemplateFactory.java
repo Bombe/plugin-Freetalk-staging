@@ -29,6 +29,7 @@ import net.pterodactylus.util.template.Template;
 import net.pterodactylus.util.template.TemplateFactory;
 import plugins.Freetalk.Board;
 import plugins.Freetalk.FTIdentity;
+import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.SubscribedBoard;
 import freenet.l10n.BaseL10n;
 
@@ -205,6 +206,8 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return board.getID();
 			} else if ("name".equals(member)) {
 				return board.getName();
+			} else if ("description".equals(member)) {
+				return board.getDescription((FTOwnIdentity) template.getData(template, "loggedInUser"));
 			} else if ("first-seen-date".equals(member)) {
 				return board.getFirstSeenDate();
 			}
