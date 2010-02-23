@@ -64,6 +64,7 @@ public class BoardPage extends FreetalkTemplatePage {
 			for (BoardThreadLink boardThread : board.getThreads()) {
 				boardThreads.add(boardThread);
 			}
+			template.set("threads", boardThreads);
 		} catch (NoSuchBoardException nsbe1) {
 			throw new RuntimeException("Could not find board: " + boardName, nsbe1);
 		}
