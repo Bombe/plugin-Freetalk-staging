@@ -9,10 +9,12 @@
 				<div class="boards">
 					<div class="header">
 						<div class="name"><%= Page.Boards.Box.Boards.Table.Header.Name | l10n | html></div>
+						<div class="first-seen"><%= Page.Boards.Box.Boards.Table.Header.FirstSeen | l10n | html></div>
 					</div>
 			<%/first>
 				<div class="board">
 					<div class="name"><a href="Board?ID=<% board.id | html>"><% board.name | html></a></div>
+					<div class="first-seen"><% board.first-seen-date | date | html></div>
 				</div>
 			<%last>
 				</div>
