@@ -9,7 +9,24 @@
 	<div class="infobox-header"><%= Page.Index.Box.BoardList.Header | l10n | html></div>
 	<div class="infobox-content">
 		<%foreach boards board>
+			<%first>
+				<div class="boards">
+					<div class="header">
+						<div class="name"><%= Page.Index.Box.BoardList.Table.Header.BoardName | l10n | html></div>
+						<div class="message-count"><%= Page.Index.Box.BoardList.Table.Header.MessageCount | l10n | html></div>
+						<div class="unread-message-count"><%= Page.Index.Box.BoardList.Table.Header.UnreadMessageCount | l10n | html></div>
+					</div>
+			<%/first>
+			<div class="board">
+				<div class="name"><a href="Board?ID=<% board.id | html>"><% board.name | html></a></div>
+				<div class="message-count"><% board.message-count></div>
+				<div class="unread-message-count"><% board.unread-message-count></div>
+			</div>
+			<%last>
+				</div>
+			<%/last>
 		<%foreachelse>
+			<div class="no-boards"><%= Page.Index.Box.BoardList.NoBoards.Text | l10n | html | replace needle='${link}' replacement='<a href="Boards">' | replace needle='${/link}' replacement='</a>'></div>
 		<%/foreach>
 	</div>
 </div>
