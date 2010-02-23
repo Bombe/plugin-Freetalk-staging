@@ -133,17 +133,20 @@ public class WebInterface {
 		Template welcomeTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/LogIn.html"));
 		welcomeTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
 
+		Template indexTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Index.html"));
+
 		Template webOfTrustMissingTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/WebOfTrustMissing.html"));
 		Template sessionExpiredTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/SessionExpired.html"));
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage("css/", "/plugins/Freetalk/ui/web/css/")));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(indexTemplate, l10n, this), "Index"));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, this), "LogIn"));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, this)));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new FreetalkTemplatePage("SessionExpired", sessionExpiredTemplate, l10n, "Page.SessionExpired.Title", this)));
 
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
-		toadletContainer.getPageMaker().addNavigationCategory("/Freetalk/LogIn", "Navigation.Menu.Name", "Navigation.Menu.Tooltip", freetalkPlugin);
+		toadletContainer.getPageMaker().addNavigationCategory("/Freetalk/", "Navigation.Menu.Name", "Navigation.Menu.Tooltip", freetalkPlugin);
 		for (PageToadlet toadlet : pageToadlets) {
 			String menuName = toadlet.getMenuName();
 			if (menuName != null) {
