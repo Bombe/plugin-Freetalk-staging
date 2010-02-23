@@ -21,11 +21,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import net.pterodactylus.util.template.Template;
-import plugins.Freetalk.FTOwnIdentity;
-import plugins.Freetalk.exceptions.NoSuchIdentityException;
 import plugins.Freetalk.ui.web2.page.Page;
 import plugins.Freetalk.ui.web2.page.TemplatePage;
-import freenet.clients.http.SessionManager.Session;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -63,28 +60,6 @@ public class FreetalkTemplatePage extends TemplatePage {
 	@Override
 	protected Collection<String> getStyleSheets() {
 		return Arrays.asList("css/freetalk.css");
-	}
-
-	/**
-	 * Returns the currently logged in {@link FTOwnIdentity own identity}.
-	 *
-	 * @param request
-	 *            The request to get the logged in user for
-	 * @return The logged in identity, or {@code null} if no identity is
-	 *         currently logged in
-	 */
-	protected FTOwnIdentity getOwnIdentity(Page.Request request) {
-		Session session = webInterface.getSession(request);
-		if (session == null) {
-			return null;
-		}
-		String userId = session.getUserID();
-		try {
-			FTOwnIdentity ownIdentity = webInterface.getFreetalkPlugin().getIdentityManager().getOwnIdentity(userId);
-			return ownIdentity;
-		} catch (NoSuchIdentityException nsie1) {
-			return null;
-		}
 	}
 
 	/**
