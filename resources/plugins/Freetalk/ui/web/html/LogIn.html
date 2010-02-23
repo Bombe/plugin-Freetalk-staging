@@ -13,9 +13,9 @@
 <div class="infobox">
 	<div class="infobox-header"><%= Page.LogIn.Box.About.Header | l10n | html></div>
 	<div class="infobox-content">
-		<p><%= Page.LogIn.Box.About.Text1 | l10n | html></p>
-		<p><%= Page.LogIn.Box.About.Text2 | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></p>
-		<p><%= Page.LogIn.Box.About.Text3 | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></p>
+		<div><%= Page.LogIn.Box.About.Text1 | l10n | html></div>
+		<div><%= Page.LogIn.Box.About.Text2 | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></div>
+		<div><%= Page.LogIn.Box.About.Text3 | l10n | html | replace needle='${bold}' replacement='<b>' | replace needle='${/bold}' replacement='</b>'></div>
 	</div>
 </div>
 
