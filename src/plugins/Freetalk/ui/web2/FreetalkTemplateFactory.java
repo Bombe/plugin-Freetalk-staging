@@ -30,6 +30,7 @@ import net.pterodactylus.util.template.TemplateFactory;
 import plugins.Freetalk.Board;
 import plugins.Freetalk.FTIdentity;
 import plugins.Freetalk.FTOwnIdentity;
+import plugins.Freetalk.Message;
 import plugins.Freetalk.SubscribedBoard;
 import plugins.Freetalk.SubscribedBoard.MessageReference;
 import plugins.Freetalk.exceptions.MessageNotFetchedException;
@@ -65,6 +66,9 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	/** Accessor for {@link MessageReference message references}. */
 	private final Accessor messageReferenceAccessor;
 
+	/** Accessor for {@link Message messages}. */
+	private final Accessor messageAccessor;
+
 	/**
 	 * Creates a new L10n template factory.
 	 *
@@ -93,6 +97,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		this.boardAccessor = new BoardAccessor();
 		this.subscribedBoardAccessor = new SubscribedBoardAccessor();
 		this.messageReferenceAccessor = new MessageReferenceAccessor();
+		this.messageAccessor = new MessageAccessor();
 	}
 
 	/**
@@ -107,6 +112,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		template.addAccessor(SubscribedBoard.class, subscribedBoardAccessor);
 		template.addAccessor(Board.class, boardAccessor);
 		template.addAccessor(MessageReference.class, messageReferenceAccessor);
+		template.addAccessor(Message.class, messageAccessor);
 		return template;
 	}
 
@@ -221,6 +227,38 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return messageReference.wasRead();
 			} else if ("date".equals(member)) {
 				return messageReference.getMessageDate();
+			}
+			return null;
+		}
+
+	}
+
+	/**
+	 * {@link Accessor} implementation that exposes various properties of a
+	 * {@link Message} object.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class MessageAccessor implements Accessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Template template, Object object, String member) {
+			Message message = (Message) object;
+			if ("id".equals(member)) {
+				return message.getID();
+			} else if ("author".equals(member)) {
+				return message.getAuthor();
+			} else if ("title".equals(member)) {
+				return message.getTitle();
+			} else if ("text".equals(member)) {
+				return message.getText();
+			} else if ("date".equals(member)) {
+				return message.getDate();
+			} else if ("fetch-date".equals(member)) {
+				return message.getFetchDate();
 			}
 			return null;
 		}
