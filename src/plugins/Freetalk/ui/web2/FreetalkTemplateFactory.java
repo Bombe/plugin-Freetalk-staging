@@ -256,6 +256,12 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return boardThreadLink.getLastReplyDate();
 			} else if ("thread-id".equals(member)) {
 				return boardThreadLink.getThreadID();
+			} else if ("reply-count".equals(member)) {
+				SubscribedBoard board = (SubscribedBoard) template.getData(template, "board");
+				return board.threadReplyCount(boardThreadLink.getThreadID());
+			} else if ("unread-reply-count".equals(member)) {
+				SubscribedBoard board = (SubscribedBoard) template.getData(template, "board");
+				return board.threadUnreadReplyCount(boardThreadLink.getThreadID());
 			}
 			return super.get(template, object, member);
 		}
