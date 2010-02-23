@@ -84,6 +84,7 @@ public class LogInPage extends FreetalkTemplatePage {
 				return "IdentityNotFound";
 			}
 			webInterface.getSessionManager().createSession(ownIdentity.getID(), request.getToadletContext());
+			return "Index";
 		}
 		return null;
 	}
