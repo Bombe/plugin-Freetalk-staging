@@ -14,7 +14,7 @@
 						<div class="unread-reply-count"><%= Page.Board.Box.Board.Table.Header.UnreadReplyCount | l10n | html></div>
 					</div>
 			<%/first>
-					<div class="thread">
+					<div class="thread <% if thread.read>read<%else>unread<%/if>">
 						<div class="title"><a href="Thread?Board=<% board.name | html>&Thread=<% thread.id | html>"><% thread.message.title | html></a></div>
 						<div class="author"><% thread.message.author.unique-name | html></div>
 						<div class="latest-message"><% thread.last-reply-date | date | html></div>
