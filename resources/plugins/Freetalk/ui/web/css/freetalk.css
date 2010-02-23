@@ -25,7 +25,12 @@ form#login {
 	font-weight: bold;
 }
 
-.boards > div > div {
+.boards .header, .boards .board {
+	display: table-row;
+}
+
+.boards .header > div, .boards .board > div {
+	display: table-cell;
 	padding: 0.5ex 1ex;
 }
 
