@@ -23,6 +23,10 @@ import java.util.Iterator;
 
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.Board;
+import plugins.Freetalk.FTOwnIdentity;
+import plugins.Freetalk.MessageManager;
+import plugins.Freetalk.SubscribedBoard;
+import plugins.Freetalk.exceptions.NoSuchBoardException;
 import plugins.Freetalk.ui.web2.page.Page;
 import freenet.l10n.BaseL10n;
 
@@ -52,10 +56,18 @@ public class BoardsPage extends FreetalkTemplatePage {
 	 */
 	@Override
 	protected void processTemplate(Request request, Template template) {
-		Iterator<Board> boardIterator = webInterface.getFreetalkPlugin().getMessageManager().boardIteratorSortedByName();
+		FTOwnIdentity ownIdentity = webInterface.getOwnIdentity(request);
+		MessageManager messageManager = webInterface.getFreetalkPlugin().getMessageManager();
+		Iterator<Board> boardIterator = messageManager.boardIteratorSortedByName();
 		Collection<Board> boards = new ArrayList<Board>();
 		while (boardIterator.hasNext()) {
-			boards.add(boardIterator.next());
+			Board board = boardIterator.next();
+			try {
+				SubscribedBoard subscribedBoard = messageManager.getSubscription(ownIdentity, board.getName());
+				boards.add(subscribedBoard);
+			} catch (NoSuchBoardException nsbe1) {
+				boards.add(board);
+			}
 		}
 
 		template.set("boards", boards);
