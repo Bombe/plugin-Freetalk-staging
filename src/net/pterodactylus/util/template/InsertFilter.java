@@ -1,5 +1,5 @@
 /*
- * utils - DataProviderPart.java - Copyright © 2010 David Roden
+ * utils - InsertFilter.java - Copyright © 2010 David Roden
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,40 +17,25 @@
 
 package net.pterodactylus.util.template;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.util.Map;
 
 /**
- * A {@link Part} whose content is dynamically fetched from a
- * {@link DataProvider}.
+ * {@link Filter} implementation that works like a {@link ReplaceFilter}, only
+ * that the actual replacement value is read from a template variable, which can
+ * be set either using {@link Template#set(String, Object)} or using a
+ * {@link StoreFilter}.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-class DataProviderPart extends Part {
-
-	/** The name of the object to get. */
-	private final String name;
-
-	/**
-	 * Creates a new data provider part.
-	 *
-	 * @param name
-	 *            The name of the object
-	 */
-	public DataProviderPart(String name) {
-		this.name = name;
-	}
+public class InsertFilter extends ReplaceFilter {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void render(Template template, DataProvider dataProvider, Writer writer) throws TemplateException {
-		try {
-			writer.write(String.valueOf(dataProvider.getData(name)));
-		} catch (IOException ioe1) {
-			throw new TemplateException("Can not render part.", ioe1);
-		}
+	public String format(Template template, Object data, Map<String, String> parameters) {
+		parameters.put("replacement", String.valueOf(template.getData(parameters.get("key"))));
+		return super.format(template, data, parameters);
 	}
 
 }

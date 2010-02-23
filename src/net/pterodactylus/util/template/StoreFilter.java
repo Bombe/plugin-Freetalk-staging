@@ -1,5 +1,5 @@
 /*
- * utils - DataProviderPart.java - Copyright © 2010 David Roden
+ * utils - StoreFilter.java - Copyright © 2010 David Roden
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,40 +17,24 @@
 
 package net.pterodactylus.util.template;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.util.Map;
 
 /**
- * A {@link Part} whose content is dynamically fetched from a
- * {@link DataProvider}.
+ * Filter that temporarily stores the output of the chain in a
+ * {@link ThreadLocal}. It is used in conjunction with {@link InsertFilter}.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-class DataProviderPart extends Part {
-
-	/** The name of the object to get. */
-	private final String name;
-
-	/**
-	 * Creates a new data provider part.
-	 *
-	 * @param name
-	 *            The name of the object
-	 */
-	public DataProviderPart(String name) {
-		this.name = name;
-	}
+public class StoreFilter implements Filter {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void render(Template template, DataProvider dataProvider, Writer writer) throws TemplateException {
-		try {
-			writer.write(String.valueOf(dataProvider.getData(name)));
-		} catch (IOException ioe1) {
-			throw new TemplateException("Can not render part.", ioe1);
-		}
+	public String format(Template template, Object data, Map<String, String> parameters) {
+		String key = parameters.get("key");
+		template.set(key, data);
+		return "";
 	}
 
 }

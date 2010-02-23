@@ -107,7 +107,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String format(Object data, Map<String, String> parameters) {
+		public String format(Template template, Object data, Map<String, String> parameters) {
 			return l10n.getString(String.valueOf(data));
 		}
 
