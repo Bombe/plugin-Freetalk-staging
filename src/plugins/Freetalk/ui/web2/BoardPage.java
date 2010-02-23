@@ -64,6 +64,7 @@ public class BoardPage extends FreetalkTemplatePage {
 			for (BoardThreadLink boardThread : board.getThreads()) {
 				boardThreads.add(boardThread);
 			}
+			template.set("loggedInUser", webInterface.getOwnIdentity(request));
 			template.set("board", board);
 			template.set("threads", boardThreads);
 		} catch (NoSuchBoardException nsbe1) {
