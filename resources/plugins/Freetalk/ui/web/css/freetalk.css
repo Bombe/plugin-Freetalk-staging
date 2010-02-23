@@ -29,9 +29,21 @@ form#login {
 	display: table-row;
 }
 
+.threads .thread.unread {
+	font-weight: bold;
+}
+
 .boards .header > div, .boards .board > div, .threads .header > div, .threads .thread > div {
 	display: table-cell;
 	padding: 0.5ex 1ex;
+}
+
+.threads .author, .threads .latest-message, .threads .reply-count, .threads .unread-reply-count {
+	white-space: nowrap;
+}
+
+.threads .title .unknown, .threads .author .unknown {
+	font-style: italic;
 }
 
 .freetalk .message .author .name {
