@@ -35,8 +35,11 @@ import plugins.Freetalk.Message;
 import plugins.Freetalk.SubscribedBoard;
 import plugins.Freetalk.SubscribedBoard.BoardThreadLink;
 import plugins.Freetalk.SubscribedBoard.MessageReference;
+import plugins.Freetalk.WoT.WoTIdentity;
+import plugins.Freetalk.WoT.WoTOwnIdentity;
 import plugins.Freetalk.exceptions.MessageNotFetchedException;
 import plugins.Freetalk.exceptions.NoSuchMessageException;
+import plugins.Freetalk.exceptions.NotInTrustTreeException;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -201,6 +204,15 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return identity.getShortestUniqueName(100);
 			} else if ("request-uri".equals(member)) {
 				return identity.getRequestURI();
+			} else if ("score".equals(member)) {
+				FTOwnIdentity ownIdentity = (FTOwnIdentity) dataProvider.getData("loggedInUser");
+				try {
+					return ((WoTOwnIdentity) ownIdentity).getScoreFor((WoTIdentity) identity);
+				} catch (NotInTrustTreeException nitte1) {
+					/* ignore, fall through. */
+				} catch (Exception e) {
+					/* kick somebody. */
+				}
 			}
 			return null;
 		}
