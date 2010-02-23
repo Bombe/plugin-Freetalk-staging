@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Map;
 
 import net.pterodactylus.util.template.Accessor;
+import net.pterodactylus.util.template.DataProvider;
 import net.pterodactylus.util.template.DefaultTemplateFactory;
 import net.pterodactylus.util.template.Filter;
 import net.pterodactylus.util.template.Template;
@@ -146,7 +147,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String format(Template template, Object data, Map<String, String> parameters) {
+		public String format(DataProvider dataProvider, Object data, Map<String, String> parameters) {
 			return l10n.getString(String.valueOf(data));
 		}
 
@@ -167,7 +168,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public String format(Template template, Object data, Map<String, String> parameters) {
+		public String format(DataProvider dataProvider, Object data, Map<String, String> parameters) {
 			if (data instanceof Date) {
 				return dateFormat.format((Date) data);
 			} else if (data instanceof Long) {
@@ -190,7 +191,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Template template, Object object, String member) {
+		public Object get(DataProvider dataProvider, Object object, String member) {
 			FTIdentity identity = (FTIdentity) object;
 			if ("id".equals(member)) {
 				return identity.getID();
@@ -218,7 +219,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Template template, Object object, String member) {
+		public Object get(DataProvider dataProvider, Object object, String member) {
 			MessageReference messageReference = (MessageReference) object;
 			if ("index".equals(member)) {
 				return messageReference.getIndex();
@@ -250,20 +251,22 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Template template, Object object, String member) {
+		public Object get(DataProvider dataProvider, Object object, String member) {
 			BoardThreadLink boardThreadLink = (BoardThreadLink) object;
 			if ("last-reply-date".equals(member)) {
 				return boardThreadLink.getLastReplyDate();
-			} else if ("thread-id".equals(member)) {
+			} else if ("id".equals(member)) {
 				return boardThreadLink.getThreadID();
 			} else if ("reply-count".equals(member)) {
-				SubscribedBoard board = (SubscribedBoard) template.getData(template, "board");
+				SubscribedBoard board = (SubscribedBoard) dataProvider.getData("board");
 				return board.threadReplyCount(boardThreadLink.getThreadID());
 			} else if ("unread-reply-count".equals(member)) {
-				SubscribedBoard board = (SubscribedBoard) template.getData(template, "board");
+				SubscribedBoard board = (SubscribedBoard) dataProvider.getData("board");
 				return board.threadUnreadReplyCount(boardThreadLink.getThreadID());
+			} else if ("read".equals(member)) {
+				return boardThreadLink.wasThreadRead();
 			}
-			return super.get(template, object, member);
+			return super.get(dataProvider, object, member);
 		}
 
 	}
@@ -280,7 +283,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Template template, Object object, String member) {
+		public Object get(DataProvider dataProvider, Object object, String member) {
 			Message message = (Message) object;
 			if ("id".equals(member)) {
 				return message.getID();
@@ -313,14 +316,14 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Template template, Object object, String member) {
+		public Object get(DataProvider dataProvider, Object object, String member) {
 			Board board = (Board) object;
 			if ("id".equals(member)) {
 				return board.getID();
 			} else if ("name".equals(member)) {
 				return board.getName();
 			} else if ("description".equals(member)) {
-				return board.getDescription((FTOwnIdentity) template.getData(template, "loggedInUser"));
+				return board.getDescription((FTOwnIdentity) dataProvider.getData("loggedInUser"));
 			} else if ("first-seen-date".equals(member)) {
 				return board.getFirstSeenDate();
 			}
@@ -341,7 +344,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Template template, Object object, String member) {
+		public Object get(DataProvider dataProvider, Object object, String member) {
 			SubscribedBoard subscribedBoard = (SubscribedBoard) object;
 			if ("message-count".equals(member)) {
 				return subscribedBoard.messageCount();
@@ -356,7 +359,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 			} else if ("subscribed".equals(member)) {
 				return true;
 			}
-			return super.get(template, object, member);
+			return super.get(dataProvider, object, member);
 		}
 
 	}
