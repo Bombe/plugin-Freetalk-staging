@@ -1,0 +1,8 @@
+<!-- Template Start: IdentityNotFound.html -->
+
+<div class="infobox infobox-error">
+	<div class="infobox-header"><%= Page.IdentityNotFound.Box.IdentityNotFound.Header | l10n | html></div>
+	<div class="infobox-content"><%= Page.IdentityNotFound.Box.IdentityNotFound.Text | l10n | html | replace needle='${link}' replacement='<a href="LogIn">' | replace needle='${/link}' replacement='</a>'></div>
+</div>
+
+<!-- Template End: IdentityNotFound.html -->
