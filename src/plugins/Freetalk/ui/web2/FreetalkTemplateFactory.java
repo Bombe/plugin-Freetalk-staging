@@ -126,7 +126,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 */
 		@Override
 		public Object get(Object object, String member) {
-			System.out.println("requesting " + member + " of " + object);
 			FTIdentity identity = (FTIdentity) object;
 			if ("id".equals(member)) {
 				return identity.getID();
