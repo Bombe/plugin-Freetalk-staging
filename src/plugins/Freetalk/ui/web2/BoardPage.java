@@ -74,6 +74,9 @@ public class BoardPage extends FreetalkTemplatePage {
 	 */
 	@Override
 	protected String getRedirectTarget(Request request) {
+		if (webInterface.getOwnIdentity(request) == null) {
+			return "LogIn";
+		}
 		String boardName = request.getHttpRequest().getParam("Name");
 		if ("".equals(boardName)) {
 			return "InvalidBoard";
