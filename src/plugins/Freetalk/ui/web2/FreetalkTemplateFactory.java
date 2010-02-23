@@ -170,7 +170,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Object object, String member) {
+		public Object get(Template template, Object object, String member) {
 			FTIdentity identity = (FTIdentity) object;
 			if ("id".equals(member)) {
 				return identity.getID();
@@ -199,7 +199,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Object object, String member) {
+		public Object get(Template template, Object object, String member) {
 			Board board = (Board) object;
 			if ("id".equals(member)) {
 				return board.getID();
@@ -225,14 +225,14 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public Object get(Object object, String member) {
+		public Object get(Template template, Object object, String member) {
 			SubscribedBoard subscribedBoard = (SubscribedBoard) object;
 			if ("message-count".equals(member)) {
 				return subscribedBoard.messageCount();
 			} else if ("unread-message-count".equals(member)) {
 				return subscribedBoard.getUnreadMessageCount();
 			}
-			return super.get(object, member);
+			return super.get(template, object, member);
 		}
 
 	}
