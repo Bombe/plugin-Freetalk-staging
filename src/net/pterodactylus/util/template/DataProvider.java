@@ -76,7 +76,6 @@ public class DataProvider {
 	 *         could be found
 	 */
 	protected Accessor findAccessor(Class<?> clazz) {
-		System.out.println("dataprovider: accessors: " + classAccessors);
 		if (classAccessors.containsKey(clazz)) {
 			return classAccessors.get(clazz);
 		}
@@ -110,16 +109,14 @@ public class DataProvider {
 			if (object == null) {
 				object = dataStore.get(nameToken);
 			} else {
-				System.out.println("dataprovider: get accessor for " + object.getClass().getName());
 				Accessor accessor = findAccessor(object.getClass());
-				System.out.println("dataprovider: got accessor: " + accessor);
 				if (accessor != null) {
 					object = accessor.get(this, object, nameToken);
 				} else {
 					throw new TemplateException("no accessor found for " + object.getClass());
 				}
 			}
-			if ((object == null) && nameTokens.hasMoreTokens()) {
+			if (object == null) {
 				return null;
 			}
 		}
