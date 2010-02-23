@@ -9,6 +9,7 @@
 					<div class="header">
 						<div class="title"><%= Page.Board.Box.Board.Table.Header.Title | l10n | html></div>
 						<div class="author"><%= Page.Board.Box.Board.Table.Header.Author | l10n | html></div>
+						<div class="trust"><%= Page.Board.Box.Board.Table.Header.Trust | l10n | html></div>
 						<div class="latest-message"><%= Page.Board.Box.Board.Table.Header.LatestMessage | l10n | html></div>
 						<div class="reply-count"><%= Page.Board.Box.Board.Table.Header.ReplyCount | l10n | html></div>
 						<div class="unread-reply-count"><%= Page.Board.Box.Board.Table.Header.UnreadReplyCount | l10n | html></div>
@@ -17,6 +18,7 @@
 					<div class="thread <% if thread.read>read<%else>unread<%/if>">
 						<div class="title"><a href="Thread?Board=<% board.name | html>&Thread=<% thread.id | html>"><%ifnull thread.message.title><span class="unknown"><%= Page.Board.Box.Board.Table.Header.Title.Unknown | l10n | html></span><%else><% thread.message.title | html><%/if></a></div>
 						<div class="author"><%ifnull thread.message.author><span class="unknown"><%= Page.Board.Box.Board.Table.Header.Author.Unknown | l10n | html></span><%else><% thread.message.author.unique-name | html><%/if></div>
+						<div class="trust"><%ifnull thread.message.author.score><span class="unknown"><%= Page.Board.Box.Board.Table.Header.Trust.Unknown | l10n | html></span><%else><% thread.message.author.score | html><%/if></div>
 						<div class="latest-message"><% thread.last-reply-date | date | html></div>
 						<div class="reply-count"><% thread.reply-count | html></div>
 						<div class="unread-reply-count"><% thread.unread-reply-count | html></div>
