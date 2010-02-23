@@ -59,6 +59,15 @@ public class WebInterface {
 		registerToadlets();
 	}
 
+	/**
+	 * Returns a reference to the {@link Freetalk} plugin itself.
+	 *
+	 * @return The Freetalk plugin
+	 */
+	public Freetalk getFreetalkPlugin() {
+		return freetalkPlugin;
+	}
+
 	//
 	// ACTIONS
 	//
@@ -88,8 +97,8 @@ public class WebInterface {
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage("css/", "/plugins/Freetalk/ui/web/css/")));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, freetalkPlugin), "LogIn"));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, freetalkPlugin)));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, this), "LogIn"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, this)));
 
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();
 		toadletContainer.getPageMaker().addNavigationCategory("/Freetalk/LogIn", "Navigation.Menu.Name", "Navigation.Menu.Tooltip", freetalkPlugin);

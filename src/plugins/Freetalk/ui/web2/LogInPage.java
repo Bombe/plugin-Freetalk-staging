@@ -23,7 +23,6 @@ import java.util.Iterator;
 
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
-import plugins.Freetalk.Freetalk;
 import plugins.Freetalk.IdentityManager;
 import freenet.l10n.BaseL10n;
 
@@ -44,12 +43,12 @@ public class LogInPage extends FreetalkTemplatePage {
 	 *            The template to render
 	 * @param l10n
 	 *            The L10n handler
-	 * @param freetalkPlugin
-	 *            The Freetalk plugin
+	 * @param webInterface
+	 *            The web interface
 	 */
-	public LogInPage(Template template, BaseL10n l10n, Freetalk freetalkPlugin) {
-		super("LogIn", template, l10n, "Page.LogIn.Title", freetalkPlugin);
-		this.identityManager = freetalkPlugin.getIdentityManager();
+	public LogInPage(Template template, BaseL10n l10n, WebInterface webInterface) {
+		super("LogIn", template, l10n, "Page.LogIn.Title", webInterface);
+		this.identityManager = webInterface.getFreetalkPlugin().getIdentityManager();
 	}
 
 	/**

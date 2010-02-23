@@ -18,7 +18,6 @@
 package plugins.Freetalk.ui.web2;
 
 import net.pterodactylus.util.template.Template;
-import plugins.Freetalk.Freetalk;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -36,11 +35,11 @@ public class WebOfTrustMissingPage extends FreetalkTemplatePage {
 	 *            The template to render
 	 * @param l10n
 	 *            The l10n handler
-	 * @param freetalkPlugin
-	 *            The Freetalk plugin
+	 * @param webInterface
+	 *            The web interface
 	 */
-	public WebOfTrustMissingPage(Template template, BaseL10n l10n, Freetalk freetalkPlugin) {
-		super("WebOfTrustMissing", template, l10n, "Page.WebOfTrustMissing.Title", freetalkPlugin);
+	public WebOfTrustMissingPage(Template template, BaseL10n l10n, WebInterface webInterface) {
+		super("WebOfTrustMissing", template, l10n, "Page.WebOfTrustMissing.Title", webInterface);
 	}
 
 	/**
@@ -48,7 +47,7 @@ public class WebOfTrustMissingPage extends FreetalkTemplatePage {
 	 */
 	@Override
 	protected void processTemplate(Template template) {
-		template.set("webOfTrustOutdated", freetalkPlugin.wotOutdated());
+		template.set("webOfTrustOutdated", webInterface.getFreetalkPlugin().wotOutdated());
 	}
 
 }

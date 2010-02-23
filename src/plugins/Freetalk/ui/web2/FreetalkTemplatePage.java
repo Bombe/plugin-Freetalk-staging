@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import net.pterodactylus.util.template.Template;
-import plugins.Freetalk.Freetalk;
 import plugins.Freetalk.ui.web2.page.Page;
 import plugins.Freetalk.ui.web2.page.TemplatePage;
 import freenet.l10n.BaseL10n;
@@ -34,7 +33,7 @@ import freenet.l10n.BaseL10n;
 public class FreetalkTemplatePage extends TemplatePage {
 
 	/** The Freetalk plugin. */
-	protected Freetalk freetalkPlugin;
+	protected WebInterface webInterface;
 
 	/**
 	 * Creates a new template page for Freetalk.
@@ -47,12 +46,12 @@ public class FreetalkTemplatePage extends TemplatePage {
 	 *            The l10n handler
 	 * @param pageTitleKey
 	 *            The l10n key of the page title
-	 * @param freetalkPlugin
-	 *            The Freetalk plugin
+	 * @param webInterface
+	 *            The web interface
 	 */
-	public FreetalkTemplatePage(String path, Template template, BaseL10n l10n, String pageTitleKey, Freetalk freetalkPlugin) {
+	public FreetalkTemplatePage(String path, Template template, BaseL10n l10n, String pageTitleKey, WebInterface webInterface) {
 		super(path, template, l10n, pageTitleKey);
-		this.freetalkPlugin = freetalkPlugin;
+		this.webInterface = webInterface;
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class FreetalkTemplatePage extends TemplatePage {
 	 */
 	@Override
 	protected String getRedirectTarget(Page.Request request) {
-		if (!freetalkPlugin.wotConnected() && !request.getURI().getPath().endsWith("/WebOfTrustMissing")) {
+		if (!webInterface.getFreetalkPlugin().wotConnected() && !request.getURI().getPath().endsWith("/WebOfTrustMissing")) {
 			return "WebOfTrustMissing";
 		}
 		return null;
