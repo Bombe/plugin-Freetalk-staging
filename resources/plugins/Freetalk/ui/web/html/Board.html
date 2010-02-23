@@ -10,14 +10,16 @@
 						<div class="title"><%= Page.Board.Box.Board.Table.Header.Title | l10n | html></div>
 						<div class="author"><%= Page.Board.Box.Board.Table.Header.Author | l10n | html></div>
 						<div class="latest-message"><%= Page.Board.Box.Board.Table.Header.LatestMessage | l10n | html></div>
-						<div class="message-count"><%= Page.Board.Box.Board.Table.Header.MessageCount | l10n | html></div>
+						<div class="reply-count"><%= Page.Board.Box.Board.Table.Header.ReplyCount | l10n | html></div>
+						<div class="unread-reply-count"><%= Page.Board.Box.Board.Table.Header.UnreadReplyCount | l10n | html></div>
 					</div>
 			<%/first>
 					<div class="thread">
-						<div class="title"><% thread.title | html></div>
-						<div class="author"><% thread.author.unique-name | html></div>
-						<div class="latest-message"></div>
-						<div class="message-count"></div>
+						<div class="title"><a href="Thread?Board=<% board.name | html>&Thread=<% thread.id | html>"><% thread.message.title | html></a></div>
+						<div class="author"><% thread.message.author.unique-name | html></div>
+						<div class="latest-message"><% thread.last-reply-date | date | html></div>
+						<div class="reply-count"><% thread.reply-count | html></div>
+						<div class="unread-reply-count"><% thread.unread-reply-count | html></div>
 					</div>
 			<%last>
 				</div>
