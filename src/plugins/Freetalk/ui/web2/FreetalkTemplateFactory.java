@@ -70,7 +70,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	private final Accessor messageAccessor;
 
 	/**
-	 * Creates a new L10n template factory.
+	 * Creates a new Freetalk template factory.
 	 *
 	 * @param l10n
 	 *            The L10n handler
@@ -80,9 +80,8 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	}
 
 	/**
-	 * Creates a new L10n template factory, retrieving templates from the given
-	 * template factory, then adding the {@link L10nFilter} as filter “l10n” to
-	 * them.
+	 * Creates a new Freetalk template factory, retrieving templates from the
+	 * given template factory, then adding all filters used by Freetalk to them.
 	 *
 	 * @param templateFactory
 	 *            The base template factory
