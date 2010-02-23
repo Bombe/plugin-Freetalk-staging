@@ -55,7 +55,7 @@ public class IndexPage extends FreetalkTemplatePage {
 	 */
 	@Override
 	protected void processTemplate(Page.Request request, Template template) {
-		FTOwnIdentity loggedInIdentity = getOwnIdentity(request);
+		FTOwnIdentity loggedInIdentity = webInterface.getOwnIdentity(request);
 		template.set("loggedInUser", loggedInIdentity);
 
 		Iterator<SubscribedBoard> boardIterator = webInterface.getFreetalkPlugin().getMessageManager().subscribedBoardIteratorSortedByName(loggedInIdentity);
@@ -71,7 +71,7 @@ public class IndexPage extends FreetalkTemplatePage {
 	 */
 	@Override
 	protected String getRedirectTarget(Request request) {
-		if (getOwnIdentity(request) == null) {
+		if (webInterface.getOwnIdentity(request) == null) {
 			return "LogIn";
 		}
 		return super.getRedirectTarget(request);

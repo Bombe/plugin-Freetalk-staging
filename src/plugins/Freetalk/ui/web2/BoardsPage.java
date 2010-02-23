@@ -66,7 +66,7 @@ public class BoardsPage extends FreetalkTemplatePage {
 	 */
 	@Override
 	protected String getRedirectTarget(Request request) {
-		if (getOwnIdentity(request) == null) {
+		if (webInterface.getOwnIdentity(request) == null) {
 			return "LogIn";
 		}
 		return super.getRedirectTarget(request);
