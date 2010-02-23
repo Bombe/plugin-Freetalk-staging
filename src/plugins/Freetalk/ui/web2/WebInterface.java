@@ -160,6 +160,7 @@ public class WebInterface {
 		Template indexTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Index.html"));
 
 		Template boardsTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Boards.html"));
+		boardsTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
 
 		Template webOfTrustMissingTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/WebOfTrustMissing.html"));
 		Template sessionExpiredTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/SessionExpired.html"));
