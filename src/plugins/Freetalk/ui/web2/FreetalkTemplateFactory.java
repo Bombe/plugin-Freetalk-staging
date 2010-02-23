@@ -18,6 +18,8 @@
 package plugins.Freetalk.ui.web2;
 
 import java.io.Reader;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import net.pterodactylus.util.template.Accessor;
@@ -43,6 +45,9 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 
 	/** The L10n filter. */
 	private final L10nFilter l10nFilter;
+
+	/** The date filter. */
+	private final DateFilter dateFilter;
 
 	/** Accessor for {@link FTIdentity identities}. */
 	private final Accessor identityAccessor;
@@ -76,6 +81,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	public FreetalkTemplateFactory(TemplateFactory templateFactory, BaseL10n l10n) {
 		this.templateFactory = templateFactory;
 		this.l10nFilter = new L10nFilter(l10n);
+		this.dateFilter = new DateFilter();
 		this.identityAccessor = new IdentityAccessor();
 		this.boardAccessor = new BoardAccessor();
 		this.subscribedBoardAccessor = new SubscribedBoardAccessor();
@@ -88,6 +94,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	public Template createTemplate(Reader templateSource) {
 		Template template = templateFactory.createTemplate(templateSource);
 		template.addFilter("l10n", l10nFilter);
+		template.addFilter("date", dateFilter);
 		template.addAccessor(FTIdentity.class, identityAccessor);
 		template.addAccessor(SubscribedBoard.class, subscribedBoardAccessor);
 		template.addAccessor(Board.class, boardAccessor);
@@ -121,6 +128,32 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		@Override
 		public String format(Template template, Object data, Map<String, String> parameters) {
 			return l10n.getString(String.valueOf(data));
+		}
+
+	}
+
+	/**
+	 * {@link Filter} implementation that formats a date. The date may be given
+	 * either as a {@link Date} or a {@link Long} object.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public static class DateFilter implements Filter {
+
+		/** The date formatter. */
+		private final DateFormat dateFormat = DateFormat.getInstance();
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String format(Template template, Object data, Map<String, String> parameters) {
+			if (data instanceof Date) {
+				return dateFormat.format((Date) data);
+			} else if (data instanceof Long) {
+				return dateFormat.format(new Date((Long) data));
+			}
+			return "";
 		}
 
 	}
