@@ -47,6 +47,12 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	/** Accessor for {@link FTIdentity identities}. */
 	private final Accessor identityAccessor;
 
+	/** Accesor for {@link Board boards}. */
+	private final Accessor boardAccessor;
+
+	/** Accessor for {@link SubscribedBoard subscribed boards}. */
+	private final Accessor subscribedBoardAccessor;
+
 	/**
 	 * Creates a new L10n template factory.
 	 *
@@ -71,6 +77,8 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		this.templateFactory = templateFactory;
 		this.l10nFilter = new L10nFilter(l10n);
 		this.identityAccessor = new IdentityAccessor();
+		this.boardAccessor = new BoardAccessor();
+		this.subscribedBoardAccessor = new SubscribedBoardAccessor();
 	}
 
 	/**
@@ -81,8 +89,8 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		Template template = templateFactory.createTemplate(templateSource);
 		template.addFilter("l10n", l10nFilter);
 		template.addAccessor(FTIdentity.class, identityAccessor);
-		template.addAccessor(SubscribedBoard.class, new SubscribedBoardAccessor());
-		template.addAccessor(Board.class, new BoardAccessor());
+		template.addAccessor(SubscribedBoard.class, subscribedBoardAccessor);
+		template.addAccessor(Board.class, boardAccessor);
 		return template;
 	}
 
