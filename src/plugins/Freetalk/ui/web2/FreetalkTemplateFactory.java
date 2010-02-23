@@ -31,6 +31,9 @@ import plugins.Freetalk.Board;
 import plugins.Freetalk.FTIdentity;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.SubscribedBoard;
+import plugins.Freetalk.SubscribedBoard.MessageReference;
+import plugins.Freetalk.exceptions.MessageNotFetchedException;
+import plugins.Freetalk.exceptions.NoSuchMessageException;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -59,6 +62,9 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	/** Accessor for {@link SubscribedBoard subscribed boards}. */
 	private final Accessor subscribedBoardAccessor;
 
+	/** Accessor for {@link MessageReference message references}. */
+	private final Accessor messageReferenceAccessor;
+
 	/**
 	 * Creates a new L10n template factory.
 	 *
@@ -86,6 +92,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		this.identityAccessor = new IdentityAccessor();
 		this.boardAccessor = new BoardAccessor();
 		this.subscribedBoardAccessor = new SubscribedBoardAccessor();
+		this.messageReferenceAccessor = new MessageReferenceAccessor();
 	}
 
 	/**
@@ -99,6 +106,7 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		template.addAccessor(FTIdentity.class, identityAccessor);
 		template.addAccessor(SubscribedBoard.class, subscribedBoardAccessor);
 		template.addAccessor(Board.class, boardAccessor);
+		template.addAccessor(MessageReference.class, messageReferenceAccessor);
 		return template;
 	}
 
@@ -188,6 +196,38 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	}
 
 	/**
+	 * {@link Accessor} implementation that can handle the “index”, “message”,
+	 * “read”, and “date” properties of a {@link MessageReference}.
+	 *
+	 * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
+	 */
+	public class MessageReferenceAccessor implements Accessor {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Object get(Template template, Object object, String member) {
+			MessageReference messageReference = (MessageReference) object;
+			if ("index".equals(member)) {
+				return messageReference.getIndex();
+			} else if ("message".equals(member)) {
+				try {
+					return messageReference.getMessage();
+				} catch (MessageNotFetchedException mnfe1) {
+					/* ignore, just return null. */
+				}
+			} else if ("read".equals(member)) {
+				return messageReference.wasRead();
+			} else if ("date".equals(member)) {
+				return messageReference.getMessageDate();
+			}
+			return null;
+		}
+
+	}
+
+	/**
 	 * {@link Accessor} implementation that exposes the {@link Board#getID “id”}
 	 * , {@link Board#getName() “name”}, and {@link Board#getFirstSeenDate()
 	 * “first-seen-date”} properties of a {@link Board}.
@@ -234,6 +274,14 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return subscribedBoard.messageCount();
 			} else if ("unread-message-count".equals(member)) {
 				return subscribedBoard.getUnreadMessageCount();
+			} else if ("latest-message-reference".equals(member)) {
+				try {
+					return subscribedBoard.getLatestMessage();
+				} catch (NoSuchMessageException nsme1) {
+					/* just ignore. */
+				}
+			} else if ("subscribed".equals(member)) {
+				return true;
 			}
 			return super.get(template, object, member);
 		}
