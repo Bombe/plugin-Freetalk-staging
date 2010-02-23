@@ -18,6 +18,7 @@
 package plugins.Freetalk.ui.web2;
 
 import net.pterodactylus.util.template.Template;
+import plugins.Freetalk.ui.web2.page.Page;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -46,7 +47,7 @@ public class WebOfTrustMissingPage extends FreetalkTemplatePage {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void processTemplate(Template template) {
+	protected void processTemplate(Page.Request request, Template template) {
 		template.set("webOfTrustOutdated", webInterface.getFreetalkPlugin().wotOutdated());
 	}
 

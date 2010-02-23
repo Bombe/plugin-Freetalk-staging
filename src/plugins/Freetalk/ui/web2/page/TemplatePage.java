@@ -90,7 +90,7 @@ public class TemplatePage implements Page {
 			pageNode.addCustomStyleSheet(styleSheet);
 		}
 
-		processTemplate(template);
+		processTemplate(request, template);
 		StringWriter stringWriter = new StringWriter();
 		template.render(stringWriter);
 		pageNode.content.addChild("%", stringWriter.toString());
@@ -112,10 +112,12 @@ public class TemplatePage implements Page {
 	 * Can be overridden when extending classes need to set variables in the
 	 * template before it is rendered.
 	 *
+	 * @param request
+	 *            The request that is rendered
 	 * @param template
 	 *            The template to set variables in
 	 */
-	protected void processTemplate(Template template) {
+	protected void processTemplate(Request request, Template template) {
 		/* do nothing. */
 	}
 

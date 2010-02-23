@@ -25,6 +25,7 @@ import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.IdentityManager;
 import plugins.Freetalk.exceptions.NoSuchIdentityException;
+import plugins.Freetalk.ui.web2.page.Page;
 import freenet.l10n.BaseL10n;
 
 /**
@@ -56,7 +57,7 @@ public class LogInPage extends FreetalkTemplatePage {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void processTemplate(Template template) {
+	protected void processTemplate(Page.Request request, Template template) {
 		Collection<FTOwnIdentity> ownIdentities = new ArrayList<FTOwnIdentity>();
 		for (Iterator<? extends FTOwnIdentity> ownIdentityIterator = identityManager.ownIdentityIterator(); ownIdentityIterator.hasNext();) {
 			FTOwnIdentity ownIdentity = ownIdentityIterator.next();
