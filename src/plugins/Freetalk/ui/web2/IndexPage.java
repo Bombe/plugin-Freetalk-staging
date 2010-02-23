@@ -17,10 +17,14 @@
 
 package plugins.Freetalk.ui.web2;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
+import plugins.Freetalk.SubscribedBoard;
 import plugins.Freetalk.ui.web2.page.Page;
 import freenet.l10n.BaseL10n;
 
@@ -53,6 +57,12 @@ public class IndexPage extends FreetalkTemplatePage {
 	protected void processTemplate(Page.Request request, Template template) {
 		FTOwnIdentity loggedInIdentity = getOwnIdentity(request);
 		template.set("loggedInUser", loggedInIdentity);
+
+		Iterator<SubscribedBoard> boardIterator = webInterface.getFreetalkPlugin().getMessageManager().subscribedBoardIteratorSortedByName(loggedInIdentity);
+		Collection<SubscribedBoard> subscribedBoards = new ArrayList<SubscribedBoard>();
+		while (boardIterator.hasNext()) {
+			subscribedBoards.add(boardIterator.next());
+		}
 		template.set("boards", Collections.emptyList());
 	}
 
