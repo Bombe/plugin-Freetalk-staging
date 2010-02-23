@@ -1,5 +1,5 @@
 /*
- * utils - Filter.java - Copyright © 2010 David Roden
+ * utils - DefaultFilter.java - Copyright © 2010 David Roden
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,24 +20,23 @@ package net.pterodactylus.util.template;
 import java.util.Map;
 
 /**
- * Filters can be used to transform the contents of a variable into some other
- * representation.
+ * {@link Filter} implementation that can return fixed values when the input
+ * value is {@code null}.
  *
  * @author <a href="mailto:bombe@pterodactylus.net">David ‘Bombe’ Roden</a>
  */
-public interface Filter {
+public class DefaultFilter implements Filter {
 
 	/**
-	 * Formats the given data object.
-	 *
-	 * @param template
-	 *            The template that is currently being rendered
-	 * @param data
-	 *            The data to format
-	 * @param parameters
-	 *            Parameters for the filter
-	 * @return The formatted data
+	 * {@inheritDoc}
 	 */
-	public Object format(Template template, Object data, Map<String, String> parameters);
+	@Override
+	public Object format(Template template, Object data, Map<String, String> parameters) {
+		String defaultValue = parameters.get("value");
+		if (data == null) {
+			return defaultValue;
+		}
+		return data;
+	}
 
 }
