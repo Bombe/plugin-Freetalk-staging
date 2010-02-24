@@ -1,0 +1,106 @@
+<!-- Template Start: Thread.html -->
+
+<%foreach messages message-reference>
+	<%ifnull message-reference.message>
+		<table width="100%" border="0">
+			<tbody>
+				<tr>
+					<td align="left" width="15%" valign="top" rowspan="2">
+						<b><i>Author unknown</i></b>
+					</td>
+					<td align="left">
+						<b>Thread not downloaded</b>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<div class="infobox-error">The parent thread of these messages was not downloaded yet.</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	<%else>
+		<table width="100%" border="0" class="message">
+			<tbody>
+				<tr class="message">
+					<td align="left" width="15%" valign="top" rowspan="2" class="author">
+						<a href="/WoT/ShowIdentity?id=<% message-reference.message.author.id | html>" class="identity-link" title="Web of Trust Page"><abbr title="<% message-reference.message.author.name | html> @ <% message-reference.message.author.id | html>"><span class="name"><% message-reference.message.author.unique-name | html></span></abbr></a>
+						<br>
+						Posts: <% message-reference.message.author.post-count>
+						<br>
+						Trusters count:
+						<abbr class="trust-count" title="The number of identities which trust this identity. This is the number of received trust values greater than or equal to 0.  "><% message-reference.message.author.truster-count></abbr>
+						/
+						<abbr class="distrust-count" title="The number of identities which do not trust this identity. This is the number of received trust values less than 0."><% message-reference.message.author.distruster-count></abbr>
+						<br>
+						Trustees count:
+						<abbr style="color: green;" title="The number of identities which this identity trusts. This is the number of given trust values greater than or equal to 0."><% message-reference.message.author.trustee-count></abbr>
+						/
+						<abbr style="color: red;" title="The number of identities which this identity does not trust. This is the number of given trust values less than 0."><% message-reference.message.author.distrustee-count></abbr>
+						<br>
+						Your trust: <% message-reference.message.author.local-trust | default value=''>
+						<br>
+						Effective Trust: <% message-reference.message.author.score>
+						<br>
+						<div class="identicon"><img width="128" height="128" src="/WoT/GetIdenticon?identity=<% message-reference.message.author.id | html>" /></div>
+					</td>
+					<td align="left" class="title read">
+						<div class="date"><% message-reference.message.date | date></div>
+						<div class="mark-unread-button">
+							<form accept-charset="utf-8" method="post" action="/Freetalk/showThread" enctype="multipart/form-data" name="ThreadPage" id="ThreadPage">
+								<input type="hidden" value="<% formPassword | html>" name="formPassword">
+								<input type="hidden" value="<% loggedInUser.id | html>" name="OwnIdentityID">
+								<input type="hidden" value="<% board.name | html>" name="BoardName">
+								<input type="hidden" value="<% thread.id | html>" name="ThreadID">
+								<input type="hidden" value="true" name="MarkThreadAsUnread">
+								<input type="submit" value="Mark as unread" name="submit">
+							</form>
+						</div>
+						<div class="mod-buttons">
+							<div class="mod-button">
+								<form accept-charset="utf-8" method="post" action="/Freetalk/ChangeTrust" enctype="multipart/form-data" name="ChangeTrustPage" id="ChangeTrustPage">
+									<input type="hidden" value="<% formPassword | html>" name="formPassword">
+									<input type="hidden" value="<% loggedInUser.id | html>" name="OwnIdentityID">
+									<input type="hidden" value="<% message-reference.message.author.id | html>" name="OtherIdentityID">
+									<input type="hidden" value="<% board.name | html>" name="BoardName">
+									<input type="hidden" value="<% thread.id | html>" name="ThreadID">
+									<input type="hidden" value="<% message-reference.id | html>" name="MessageID">
+									<input type="hidden" value="10" name="TrustChange">
+									<input type="submit" value="+" name="submit" style="width: 2em;">
+								</form>
+							</div>
+							<div class="mod-button">
+								<form accept-charset="utf-8" method="post" action="/Freetalk/ChangeTrust" enctype="multipart/form-data" name="ChangeTrustPage" id="ChangeTrustPage">
+									<input type="hidden" value="<% formPassword | html>" name="formPassword">
+									<input type="hidden" value="<% loggedInUser.id | html>" name="OwnIdentityID">
+									<input type="hidden" value="<% message-reference.message.author.id | html>" name="OtherIdentityID">
+									<input type="hidden" value="<% board.name | html>" name="BoardName">
+									<input type="hidden" value="<% thread.id | html>" name="ThreadID">
+									<input type="hidden" value="<% message-reference.id | html>" name="MessageID">
+									<input type="hidden" value="-10" name="TrustChange">
+									<input type="submit" value="-" name="submit" style="width: 2em;">
+								</form>
+							</div>
+						</div>
+						<div class="text">Frühtalk</div>
+					</td>
+				</tr>
+				<tr class="body">
+					<td align="left"><div class="text"><% message-reference.message.text | html></div>
+						<div align="right">
+							<form accept-charset="utf-8" method="post" action="/Freetalk/NewReply" enctype="multipart/form-data" name="NewReplyPage" id="NewReplyPage">
+							<input type="hidden" value="<% formPassword | html>" name="formPassword">
+							<input type="hidden" value="<% loggedInUser.id | html>" name="OwnIdentityID">
+							<input type="hidden" value="<% board.name | html>" name="BoardName">
+							<input type="hidden" value="<% thread.id | html>" name="ParentThreadID">
+							<input type="hidden" value="<% message-reference.id | html>" name="ParentMessageID">
+							<input type="submit" value="Reply" name="submit"></form>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	<%/if>
+<%/foreach>
+
+<!-- Template End: Thread.html -->

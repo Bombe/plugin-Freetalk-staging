@@ -50,6 +50,19 @@ form#login {
 	font-style: italic;
 }
 
+.message .information {
+	height: 100%;
+	float: left;
+}
+
+.message .title {
+	width: 100%;
+}
+
+.message .body .text {
+	white-space: pre-wrap;
+}
+
 .freetalk .message .author .name {
 	font-weight: bold;
 	font-style: italic;

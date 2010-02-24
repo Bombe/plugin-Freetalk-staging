@@ -163,12 +163,16 @@ public class WebInterface {
 		Template boardsTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Boards.html"));
 		boardsTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
 
+		Template threadTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/Thread.html"));
+		threadTemplate.set("formPassword", freetalkPlugin.getPluginRespirator().getToadletContainer().getFormPassword());
+
 		Template webOfTrustMissingTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/WebOfTrustMissing.html"));
 		Template sessionExpiredTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/SessionExpired.html"));
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(indexTemplate, l10n, this), "Index"));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, this), "LogIn"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new ThreadPage(threadTemplate, l10n, this)));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardPage(boardTemplate, l10n, this)));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardsPage(boardsTemplate, l10n, this), "Boards"));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, this)));
