@@ -38,6 +38,10 @@ form#login {
 	padding: 0.5ex 1ex;
 }
 
+.threads .title {
+	width: 100%;
+}
+
 .threads .author, .threads .latest-message, .threads .reply-count, .threads .unread-reply-count {
 	white-space: nowrap;
 }
