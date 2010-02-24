@@ -19,6 +19,8 @@ package plugins.Freetalk.ui.web2;
 
 import java.io.Reader;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -33,6 +35,7 @@ import plugins.Freetalk.FTIdentity;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.Message;
 import plugins.Freetalk.SubscribedBoard;
+import plugins.Freetalk.SubscribedBoard.BoardReplyLink;
 import plugins.Freetalk.SubscribedBoard.BoardThreadLink;
 import plugins.Freetalk.SubscribedBoard.MessageReference;
 import plugins.Freetalk.WoT.WoTIdentity;
@@ -312,6 +315,13 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return board.threadUnreadReplyCount(boardThreadLink.getThreadID());
 			} else if ("read".equals(member)) {
 				return boardThreadLink.wasThreadRead();
+			} else if ("replies".equals(member)) {
+				SubscribedBoard board = (SubscribedBoard) dataProvider.getData("board");
+				Collection<BoardReplyLink> replies = new ArrayList<BoardReplyLink>();
+				for (BoardReplyLink reply : board.getAllThreadReplies(boardThreadLink.getThreadID(), true)) {
+					replies.add(reply);
+				}
+				return replies;
 			}
 			return super.get(dataProvider, object, member);
 		}
