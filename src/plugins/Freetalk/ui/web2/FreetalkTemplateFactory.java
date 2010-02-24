@@ -204,6 +204,41 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 				return identity.getShortestUniqueName(100);
 			} else if ("request-uri".equals(member)) {
 				return identity.getRequestURI();
+			} else if ("post-count".equals(member)) {
+				return ((WebInterface) dataProvider.getData("webInterface")).getFreetalkPlugin().getMessageManager().getMessagesBy(identity).size();
+			} else if ("truster-count".equals(member)) {
+				try {
+					return ((WebInterface) dataProvider.getData("webInterface")).getFreetalkPlugin().getIdentityManager().getReceivedTrustsCount(identity, 1);
+				} catch (Exception e1) {
+					/* ignore, fall through. */
+				}
+			} else if ("distruster-count".equals(member)) {
+				try {
+					return ((WebInterface) dataProvider.getData("webInterface")).getFreetalkPlugin().getIdentityManager().getReceivedTrustsCount(identity, -1);
+				} catch (Exception e1) {
+					/* ignore, fall through. */
+				}
+			} else if ("trustee-count".equals(member)) {
+				try {
+					return ((WebInterface) dataProvider.getData("webInterface")).getFreetalkPlugin().getIdentityManager().getGivenTrustsCount(identity, 1);
+				} catch (Exception e1) {
+					/* ignore, fall through. */
+				}
+			} else if ("distrustee-count".equals(member)) {
+				try {
+					return ((WebInterface) dataProvider.getData("webInterface")).getFreetalkPlugin().getIdentityManager().getGivenTrustsCount(identity, -1);
+				} catch (Exception e1) {
+					/* ignore, fall through. */
+				}
+			} else if ("local-trust".equals(member)) {
+				FTOwnIdentity ownIdentity = (FTOwnIdentity) dataProvider.getData("loggedInUser");
+				try {
+					return ((WoTOwnIdentity) ownIdentity).getTrustIn((WoTIdentity) identity);
+				} catch (NotInTrustTreeException nitte1) {
+					/* ignore, fall through. */
+				} catch (Exception e) {
+					/* kick somebody. */
+				}
 			} else if ("score".equals(member)) {
 				FTOwnIdentity ownIdentity = (FTOwnIdentity) dataProvider.getData("loggedInUser");
 				try {
