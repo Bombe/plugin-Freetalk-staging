@@ -17,7 +17,6 @@
 
 package plugins.Freetalk.ui.web2;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import net.pterodactylus.util.template.Template;
@@ -60,10 +59,7 @@ public class BoardPage extends FreetalkTemplatePage {
 		FTOwnIdentity ownIdentity = webInterface.getOwnIdentity(request);
 		try {
 			SubscribedBoard board = messageManager.getSubscription(ownIdentity, boardName);
-			Collection<BoardThreadLink> boardThreads = new ArrayList<BoardThreadLink>();
-			for (BoardThreadLink boardThread : board.getThreads()) {
-				boardThreads.add(boardThread);
-			}
+			Collection<BoardThreadLink> boardThreads = board.getThreads();
 			template.set("loggedInUser", webInterface.getOwnIdentity(request));
 			template.set("board", board);
 			template.set("threads", boardThreads);
