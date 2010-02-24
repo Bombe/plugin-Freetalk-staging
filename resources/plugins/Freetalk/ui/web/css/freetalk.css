@@ -42,7 +42,7 @@ form#login {
 	white-space: nowrap;
 }
 
-.threads .title .unknown, .threads .author .unknown {
+.threads .title .unknown, .threads .author .unknown, .threads .trust .unknown {
 	font-style: italic;
 }
 
