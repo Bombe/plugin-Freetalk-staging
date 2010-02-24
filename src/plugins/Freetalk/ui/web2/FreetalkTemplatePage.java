@@ -52,6 +52,7 @@ public class FreetalkTemplatePage extends TemplatePage {
 	public FreetalkTemplatePage(String path, Template template, BaseL10n l10n, String pageTitleKey, WebInterface webInterface) {
 		super(path, template, l10n, pageTitleKey);
 		this.webInterface = webInterface;
+		template.set("webInterface", webInterface);
 	}
 
 	/**
