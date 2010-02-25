@@ -29,7 +29,6 @@ import plugins.Freetalk.SubscribedBoard.MessageReference;
 import plugins.Freetalk.exceptions.NoSuchBoardException;
 import plugins.Freetalk.exceptions.NoSuchMessageException;
 import plugins.Freetalk.ui.web2.page.Page;
-import freenet.l10n.BaseL10n;
 
 /**
  * {@link Page} implementation that renders a single thread.
@@ -52,13 +51,11 @@ public class ThreadPage extends FreetalkTemplatePage {
 	 *
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The l10n handler
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public ThreadPage(Template template, BaseL10n l10n, WebInterface webInterface) {
-		super("Thread", template, l10n, "Page.Thread.Title", webInterface);
+	public ThreadPage(Template template, WebInterface webInterface) {
+		super("Thread", template, "Page.Thread.Title", webInterface);
 
 	}
 

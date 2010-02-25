@@ -170,13 +170,13 @@ public class WebInterface {
 		Template sessionExpiredTemplate = templateFactory.createTemplate(createReader("/plugins/Freetalk/ui/web/html/SessionExpired.html"));
 
 		PageToadletFactory pageToadletFactory = new PageToadletFactory(freetalkPlugin.getPluginRespirator().getHLSimpleClient(), "/Freetalk/");
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(indexTemplate, l10n, this), "Index"));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, l10n, this), "LogIn"));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new ThreadPage(threadTemplate, l10n, this)));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardPage(boardTemplate, l10n, this)));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardsPage(boardsTemplate, l10n, this), "Boards"));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, l10n, this)));
-		pageToadlets.add(pageToadletFactory.createPageToadlet(new FreetalkTemplatePage("SessionExpired", sessionExpiredTemplate, l10n, "Page.SessionExpired.Title", this)));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new IndexPage(indexTemplate, this), "Index"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new LogInPage(welcomeTemplate, this), "LogIn"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new ThreadPage(threadTemplate, this)));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardPage(boardTemplate, this)));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new BoardsPage(boardsTemplate, this), "Boards"));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new WebOfTrustMissingPage(webOfTrustMissingTemplate, this)));
+		pageToadlets.add(pageToadletFactory.createPageToadlet(new FreetalkTemplatePage("SessionExpired", sessionExpiredTemplate, "Page.SessionExpired.Title", this)));
 		pageToadlets.add(pageToadletFactory.createPageToadlet(new CSSPage("css/", "/plugins/Freetalk/ui/web/css/")));
 
 		ToadletContainer toadletContainer = freetalkPlugin.getPluginRespirator().getToadletContainer();

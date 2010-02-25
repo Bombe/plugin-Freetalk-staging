@@ -19,7 +19,6 @@ package plugins.Freetalk.ui.web2;
 
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.ui.web2.page.Page;
-import freenet.l10n.BaseL10n;
 
 /**
  * Web page that tells the user the the web of trust plugin is either missing or
@@ -34,13 +33,11 @@ public class WebOfTrustMissingPage extends FreetalkTemplatePage {
 	 *
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The l10n handler
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public WebOfTrustMissingPage(Template template, BaseL10n l10n, WebInterface webInterface) {
-		super("WebOfTrustMissing", template, l10n, "Page.WebOfTrustMissing.Title", webInterface);
+	public WebOfTrustMissingPage(Template template, WebInterface webInterface) {
+		super("WebOfTrustMissing", template, "Page.WebOfTrustMissing.Title", webInterface);
 	}
 
 	/**

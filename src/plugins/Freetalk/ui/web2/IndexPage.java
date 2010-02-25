@@ -25,7 +25,6 @@ import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.SubscribedBoard;
 import plugins.Freetalk.ui.web2.page.Page;
-import freenet.l10n.BaseL10n;
 
 /**
  * Index page implementation that displays the list of currently subscribed
@@ -40,13 +39,11 @@ public class IndexPage extends FreetalkTemplatePage {
 	 *
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The L10n handler
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public IndexPage(Template template, BaseL10n l10n, WebInterface webInterface) {
-		super("", template, l10n, "Page.Index.Title", webInterface);
+	public IndexPage(Template template, WebInterface webInterface) {
+		super("", template, "Page.Index.Title", webInterface);
 	}
 
 	/**

@@ -23,7 +23,6 @@ import java.util.Collection;
 import net.pterodactylus.util.template.Template;
 import plugins.Freetalk.ui.web2.page.Page;
 import plugins.Freetalk.ui.web2.page.TemplatePage;
-import freenet.l10n.BaseL10n;
 
 /**
  * Base page for the Freetalk web interface.
@@ -42,15 +41,13 @@ public class FreetalkTemplatePage extends TemplatePage {
 	 *            The path of the page
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The l10n handler
 	 * @param pageTitleKey
 	 *            The l10n key of the page title
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public FreetalkTemplatePage(String path, Template template, BaseL10n l10n, String pageTitleKey, WebInterface webInterface) {
-		super(path, template, l10n, pageTitleKey);
+	public FreetalkTemplatePage(String path, Template template, String pageTitleKey, WebInterface webInterface) {
+		super(path, template, webInterface.getFreetalkPlugin().getBaseL10n(), pageTitleKey);
 		this.webInterface = webInterface;
 		template.set("webInterface", webInterface);
 	}

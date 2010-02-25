@@ -26,7 +26,6 @@ import plugins.Freetalk.FTOwnIdentity;
 import plugins.Freetalk.IdentityManager;
 import plugins.Freetalk.exceptions.NoSuchIdentityException;
 import plugins.Freetalk.ui.web2.page.Page;
-import freenet.l10n.BaseL10n;
 
 /**
  * Renders the log-in page.
@@ -43,13 +42,11 @@ public class LogInPage extends FreetalkTemplatePage {
 	 *
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The L10n handler
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public LogInPage(Template template, BaseL10n l10n, WebInterface webInterface) {
-		super("LogIn", template, l10n, "Page.LogIn.Title", webInterface);
+	public LogInPage(Template template, WebInterface webInterface) {
+		super("LogIn", template, "Page.LogIn.Title", webInterface);
 		this.identityManager = webInterface.getFreetalkPlugin().getIdentityManager();
 	}
 

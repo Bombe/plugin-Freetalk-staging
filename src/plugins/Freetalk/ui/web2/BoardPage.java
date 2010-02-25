@@ -26,7 +26,6 @@ import plugins.Freetalk.SubscribedBoard;
 import plugins.Freetalk.SubscribedBoard.BoardThreadLink;
 import plugins.Freetalk.exceptions.NoSuchBoardException;
 import plugins.Freetalk.ui.web2.page.Page;
-import freenet.l10n.BaseL10n;
 
 /**
  * {@link Page} that lists all messages in a board.
@@ -40,13 +39,11 @@ public class BoardPage extends FreetalkTemplatePage {
 	 *
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The L10n handler
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public BoardPage(Template template, BaseL10n l10n, WebInterface webInterface) {
-		super("Board", template, l10n, "Page.Board.Title", webInterface);
+	public BoardPage(Template template, WebInterface webInterface) {
+		super("Board", template, "Page.Board.Title", webInterface);
 	}
 
 	/**

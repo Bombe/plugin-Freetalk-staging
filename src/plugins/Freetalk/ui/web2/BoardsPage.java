@@ -28,7 +28,6 @@ import plugins.Freetalk.MessageManager;
 import plugins.Freetalk.SubscribedBoard;
 import plugins.Freetalk.exceptions.NoSuchBoardException;
 import plugins.Freetalk.ui.web2.page.Page;
-import freenet.l10n.BaseL10n;
 
 /**
  * {@link Page} implementation that displays all currently known {@link Board}s.
@@ -42,13 +41,11 @@ public class BoardsPage extends FreetalkTemplatePage {
 	 *
 	 * @param template
 	 *            The template to render
-	 * @param l10n
-	 *            The l10n handler
 	 * @param webInterface
 	 *            The web interface
 	 */
-	public BoardsPage(Template template, BaseL10n l10n, WebInterface webInterface) {
-		super("Boards", template, l10n, "Page.Boards.Title", webInterface);
+	public BoardsPage(Template template, WebInterface webInterface) {
+		super("Boards", template, "Page.Boards.Title", webInterface);
 	}
 
 	/**
