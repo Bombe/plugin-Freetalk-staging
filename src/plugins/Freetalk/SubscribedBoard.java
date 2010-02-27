@@ -44,22 +44,12 @@ public final class SubscribedBoard extends Board {
 		mParentBoard = myParentBoard;
 		mSubscriber = mySubscriber;
 	}
-	
-    public void initializeTransient(Freetalk myFreetalk) {
-    	super.initializeTransient(myFreetalk);
-    	mParentBoard.initializeTransient(myFreetalk);
-    	if(mSubscriber instanceof Persistent) {
-    		Persistent subscriber = (Persistent)mSubscriber;
-    		subscriber.initializeTransient(myFreetalk);
-    	}
-    }
     
     protected void storeWithoutCommit() {
     	throwIfNotStored(mSubscriber);
     	throwIfNotStored(mParentBoard);
     	super.storeWithoutCommit();
     }
-
 	
 	protected void deleteWithoutCommit() {
 		// TODO: When deleting a subscribed board, check whether the objects of class Message are being used by a subscribed board of another own identity.
@@ -75,17 +65,26 @@ public final class SubscribedBoard extends Board {
 			checkedDelete();
 		}
 		catch(RuntimeException e) {
-			rollbackAndThrow(e);
+			checkedRollbackAndThrow(e);
 		}
 
 	}
 	
+	public FTOwnIdentity getSubscriber() {
+    	if(mSubscriber instanceof Persistent) {
+    		final Persistent subscriber = (Persistent)mSubscriber;
+    		subscriber.initializeTransient(mFreetalk);
+    	}
+    	return mSubscriber;
+	}
+	
 	public Board getParentBoard() {
+		mParentBoard.initializeTransient(mFreetalk);
 		return mParentBoard;
 	}
 
     public synchronized String getDescription() {
-        return mDescription != null ? mDescription : super.getDescription(mSubscriber);
+        return mDescription != null ? mDescription : super.getDescription(getSubscriber());
     }
     
     /**
@@ -129,7 +128,7 @@ public final class SubscribedBoard extends Board {
      * @throws Exception If one of the addMessage calls fails. 
      */
     protected synchronized final void synchronizeWithoutCommit() throws Exception {
-    	for(Board.BoardMessageLink messageLink : mParentBoard.getMessagesAfterIndex(mHighestSynchronizedParentMessageIndex)) {
+    	for(Board.BoardMessageLink messageLink : getParentBoard().getMessagesAfterIndex(mHighestSynchronizedParentMessageIndex)) {
     		addMessage(messageLink.getMessage());
     		mHighestSynchronizedParentMessageIndex = messageLink.getMessageIndex();
     	}
@@ -148,10 +147,10 @@ public final class SubscribedBoard extends Board {
      * @throws Exception If wantsMessagesFrom(author of newMessage) fails. 
      */
     protected synchronized final void addMessage(Message newMessage) throws Exception {
-    	if(!mSubscriber.wantsMessagesFrom(newMessage.getAuthor())) {
+    	if(!getSubscriber().wantsMessagesFrom(newMessage.getAuthor())) {
     		// FIXME: Store a UnwantedMessageLink object for the message and periodically check whether the trust value of the author changed to positive
     		// - then we need to add the unwanted messages of that author.
-    		Logger.error(this, "Ignoring message from " + newMessage.getAuthor().getNickname() + " because " + mSubscriber.getNickname() + " does not his messages.");
+    		Logger.error(this, "Ignoring message from " + newMessage.getAuthor().getNickname() + " because " + getSubscriber().getNickname() + " does not his messages.");
     		return;
     	}
     	
@@ -421,7 +420,7 @@ public final class SubscribedBoard extends Board {
     		try {
     			final Message parentThread = mFreetalk.getMessageManager().get(parentThreadID);
     			
-    			if(Arrays.binarySearch(parentThread.getBoards(), mParentBoard) < 0) {
+    			if(Arrays.binarySearch(parentThread.getBoards(), getParentBoard()) < 0) {
     				// The parent thread is not a message in this board.
     				// TODO: Decide whether we should maybe store a flag in the BoardThreadLink which marks it.
     				// IMHO it is part of the UI's job to read the board list of the actual Message object and display something if the thread is not
@@ -472,6 +471,20 @@ public final class SubscribedBoard extends Board {
             q.descend("mMessageIndex").orderAscending(); /* Needed for NNTP */
         }
         return new Persistent.InitializingObjectSet<MessageReference>(mFreetalk, q.execute());
+    }
+    
+    @SuppressWarnings("unchecked")
+	public synchronized int getFirstMessageIndex() throws NoSuchMessageException {
+    	final Query q = mDB.query();
+        q.constrain(MessageReference.class);
+        q.descend("mBoard").constrain(this).identity();
+        q.descend("mMessageIndex").orderAscending();
+        ObjectSet<MessageReference> result = q.execute();
+        
+        if(result.size() == 0)
+        	throw new NoSuchMessageException();
+        
+        return result.next().getIndex();
     }
 
     @SuppressWarnings("unchecked")
@@ -688,7 +701,7 @@ public final class SubscribedBoard extends Board {
          * @throws MessageNotFetchedException If the message belonging to this reference was not fetched yet.
          */
         public Message getMessage() throws MessageNotFetchedException {
-        	activate(3); // FIXME: Figure out a reasonable depth
+        	checkedActivate(3); // FIXME: Figure out a reasonable depth
         	mMessage.initializeTransient(mFreetalk);
             return mMessage;
         }
@@ -728,7 +741,7 @@ public final class SubscribedBoard extends Board {
         		checkedStore();
         	}
         	catch(RuntimeException e) {
-        		rollbackAndThrow(e);
+        		checkedRollbackAndThrow(e);
         	}
         }
         
@@ -739,10 +752,10 @@ public final class SubscribedBoard extends Board {
         	synchronized(mDB.lock()) {
         		try {
 	        		storeWithoutCommit();
-	        		commit(this);
+	        		checkedCommit(this);
         		}
         		catch(RuntimeException e) {
-        			rollbackAndThrow(e);
+        			checkedRollbackAndThrow(e);
         		}
         	}
         }
