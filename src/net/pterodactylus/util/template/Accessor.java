@@ -54,7 +54,6 @@ class MapAccessor implements Accessor {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Object get(DataProvider dataProvider, Object object, String member) {
 		return ((Map<?, ?>) object).get(member);
 	}

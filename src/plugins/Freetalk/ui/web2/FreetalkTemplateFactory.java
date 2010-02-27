@@ -114,7 +114,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Template createTemplate(Reader templateSource) {
 		Template template = templateFactory.createTemplate(templateSource);
 		template.addFilter("l10n", l10nFilter);
@@ -152,7 +151,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public String format(DataProvider dataProvider, Object data, Map<String, String> parameters) {
 			return l10n.getString(String.valueOf(data));
 		}
@@ -173,7 +171,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public String format(DataProvider dataProvider, Object data, Map<String, String> parameters) {
 			if (data instanceof Date) {
 				return dateFormat.format((Date) data);
@@ -196,7 +193,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object get(DataProvider dataProvider, Object object, String member) {
 			FTIdentity identity = (FTIdentity) object;
 			if ("id".equals(member)) {
@@ -268,7 +264,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object get(DataProvider dataProvider, Object object, String member) {
 			MessageReference messageReference = (MessageReference) object;
 			if ("index".equals(member)) {
@@ -339,7 +334,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object get(DataProvider dataProvider, Object object, String member) {
 			Message message = (Message) object;
 			if ("id".equals(member)) {
@@ -372,7 +366,6 @@ public class FreetalkTemplateFactory implements TemplateFactory {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object get(DataProvider dataProvider, Object object, String member) {
 			Board board = (Board) object;
 			if ("id".equals(member)) {

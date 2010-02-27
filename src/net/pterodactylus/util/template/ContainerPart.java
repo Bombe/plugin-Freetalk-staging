@@ -72,7 +72,6 @@ class ContainerPart extends Part implements Iterable<Part> {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Iterator<Part> iterator() {
 		return parts.iterator();
 	}

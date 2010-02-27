@@ -59,7 +59,6 @@ public interface DataStore {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object get(String name) {
 			return objectStore.get(name);
 		}
@@ -67,7 +66,6 @@ public interface DataStore {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public void set(String name, Object data) {
 			objectStore.put(name, data);
 		}

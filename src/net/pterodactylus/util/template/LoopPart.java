@@ -197,7 +197,6 @@ class LoopPart extends ContainerPart {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object get(DataProvider dataProvider, Object object, String member) {
 			LoopStructure loopStructure = (LoopStructure) object;
 			if ("size".equals(member)) {

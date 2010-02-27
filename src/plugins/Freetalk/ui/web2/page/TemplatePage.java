@@ -68,7 +68,6 @@ public class TemplatePage implements Page {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public String getPath() {
 		return path;
 	}
@@ -76,7 +75,6 @@ public class TemplatePage implements Page {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Response handleRequest(Request request) {
 		String redirectTarget = getRedirectTarget(request);
 		if (redirectTarget != null) {

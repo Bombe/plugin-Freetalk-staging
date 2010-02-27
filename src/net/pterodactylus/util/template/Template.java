@@ -522,7 +522,6 @@ public class Template {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public Object format(DataProvider dataProvider, Object data, Map<String, String> parameters) {
 			return originalFilter.format(dataProvider, data, parameters);
 		}

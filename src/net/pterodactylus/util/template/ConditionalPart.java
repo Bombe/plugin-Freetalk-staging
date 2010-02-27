@@ -98,7 +98,6 @@ class ConditionalPart extends ContainerPart {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public boolean isAllowed(DataProvider dataProvider) throws TemplateException {
 			return !condition.isAllowed(dataProvider);
 		}
@@ -139,7 +138,6 @@ class ConditionalPart extends ContainerPart {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public boolean isAllowed(DataProvider dataProvider) throws TemplateException {
 			for (Condition condition : conditions) {
 				if (!condition.isAllowed(dataProvider)) {
@@ -185,7 +183,6 @@ class ConditionalPart extends ContainerPart {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public boolean isAllowed(DataProvider dataProvider) throws TemplateException {
 			for (Condition condition : conditions) {
 				if (condition.isAllowed(dataProvider)) {
@@ -237,7 +234,6 @@ class ConditionalPart extends ContainerPart {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public boolean isAllowed(DataProvider dataProvider) throws TemplateException {
 			return Boolean.valueOf(String.valueOf(dataProvider.getData(itemName))) ^ invert;
 		}
@@ -284,7 +280,6 @@ class ConditionalPart extends ContainerPart {
 		/**
 		 * {@inheritDoc}
 		 */
-		@Override
 		public boolean isAllowed(DataProvider dataProvider) throws TemplateException {
 			return (dataProvider.getData(itemName) == null) ^ invert;
 		}

@@ -48,7 +48,6 @@ public class CSSPage implements Page {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public String getPath() {
 		return pathPrefix;
 	}
@@ -56,7 +55,6 @@ public class CSSPage implements Page {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Response handleRequest(Request request) {
 		String path = request.getURI().getPath();
 		int lastSlash = path.lastIndexOf('/');

@@ -170,7 +170,6 @@ public class PageToadlet extends Toadlet implements LinkEnabledCallback {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public boolean isEnabled(ToadletContext toadletContext) {
 		return true;
 	}

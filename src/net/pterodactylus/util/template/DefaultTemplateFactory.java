@@ -129,7 +129,6 @@ public class DefaultTemplateFactory implements TemplateFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public Template createTemplate(Reader templateSource) {
 		Template template = new Template(templateSource);
 		if (addHtmlFilter) {
