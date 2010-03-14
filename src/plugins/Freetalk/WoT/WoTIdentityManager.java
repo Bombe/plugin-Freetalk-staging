@@ -44,7 +44,7 @@ import freenet.support.io.NativeThread;
  * 
  * @author xor (xor@freenetproject.org)
  */
-public class WoTIdentityManager extends IdentityManager {
+public final class WoTIdentityManager extends IdentityManager {
 	
 	/* FIXME: This really has to be tweaked before release. */  
 	private static final int THREAD_PERIOD = Freetalk.FAST_DEBUG_MODE ? (30 * 1000) : (5 * 60 * 1000);
@@ -315,7 +315,7 @@ public class WoTIdentityManager extends IdentityManager {
 	/**
 	 * Not synchronized, the involved identities might be deleted during the query - which is not really a problem.
 	 */
-	public int getTrust(WoTOwnIdentity treeOwner, WoTIdentity target) throws NotTrustedException, Exception {
+	public byte getTrust(WoTOwnIdentity treeOwner, WoTIdentity target) throws NotTrustedException, Exception {
 		if(mIsUnitTest)
 			return 0;
 		
@@ -324,7 +324,7 @@ public class WoTIdentityManager extends IdentityManager {
 		if(trust.equals("null"))
 			throw new NotTrustedException(treeOwner, target);
 		
-		return Integer.parseInt(trust);
+		return Byte.parseByte(trust);
 	}
 
 	/**
