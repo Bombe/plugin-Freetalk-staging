@@ -3,6 +3,7 @@
  * http://www.gnu.org/ for further details of the GPL. */
 package plugins.Freetalk.ui.web;
 
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -27,6 +28,7 @@ import plugins.Freetalk.exceptions.NoSuchMessageException;
 import plugins.Freetalk.exceptions.NoSuchMessageRatingException;
 import plugins.Freetalk.exceptions.NotInTrustTreeException;
 import plugins.Freetalk.exceptions.NotTrustedException;
+import freenet.keys.FreenetURI;
 import freenet.l10n.BaseL10n;
 import freenet.support.HTMLNode;
 import freenet.support.Logger;
@@ -501,8 +503,14 @@ public final class ThreadPage extends WebPageImpl {
 					}
 					uriKey += currentLine.substring(firstSlash, nextSpace);
 					currentLine = currentLine.substring(nextSpace);
-					HTMLNode linkNode = (linkClass != null) ? new HTMLNode("a", new String[] { "href", "class" }, new String[] { "/" + uriKey, linkClass }, uriKey) : new HTMLNode("a", "href", "/" + uriKey, uriKey);
-					messageNode.addChild(linkNode);
+					try {
+						new FreenetURI(uriKey);
+						HTMLNode linkNode = (linkClass != null) ? new HTMLNode("a", new String[] { "href", "class" }, new String[] { "/" + uriKey, linkClass }, uriKey) : new HTMLNode("a", "href", "/" + uriKey, uriKey);
+						messageNode.addChild(linkNode);
+					} catch (MalformedURLException mue1) {
+						/* not a valid URI, ignore. */
+						messageNode.addChild("#", uriKey);
+					}
 				}
 			}
 			chkLink = currentLine.indexOf("CHK@");
